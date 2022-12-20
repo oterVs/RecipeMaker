@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.FragmentLogIn">
+
+
+    <com.google.android.material.card.MaterialCardView
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="275dp"
+        android:backgroundTint="@color/seed"
+        style="?attr/materialCardViewFilledStyle"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.Cut"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/iconlogin"
+
+                ></ImageView>
+
+
+        </LinearLayout>
+
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="35sp"
+        app:layout_constraintHorizontal_bias="0.95"
+        android:textColor="@color/md_theme_dark_inverseOnSurface"
+        >
+
+    </TextView>
+
+    <LinearLayout
+        app:layout_constraintVertical_bias="0.3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="30sp"
+        android:paddingEnd="30sp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filledTextField"
+            style="?attr/textInputFilledStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15sp"
+            android:backgroundTint="@android:color/transparent"
+            android:hint="User"
+            app:layout_constraintCircleRadius="12sp"
+            app:startIconDrawable="@drawable/ic_baseline_account_circle_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:background="@color/cardview_light_background"
+                android:layout_height="wrap_content"
+                 />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password"
+            style="?attr/textInputFilledStyle"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:hint="Password"
+            app:startIconDrawable="@drawable/ic_baseline_password_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/cardview_light_background" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+
+            android:id="@+id/buttonLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15sp"
+            android:backgroundTint="@color/md_theme_dark_inverseOnSurface"
+            android:text="Login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </Button>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15sp"
+            android:text="Or Login With">
+
+        </TextView>
+
+
+
+            <Button
+                style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10sp"
+                android:backgroundTint="@color/md_theme_light_onSecondary"
+                android:text="Google"
+                android:textColor="@color/md_theme_dark_background"
+                app:icon="@drawable/google"
+                app:iconTint="@null">
+
+            </Button>
+
+
+
+
+
+        <Button
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:backgroundTint="@color/facebook"
+            android:text="Facebook"
+            android:textColor="@color/md_theme_light_surface"
+            app:icon="@drawable/facebook"
+            app:iconTint="@null">
+
+        </Button>
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/seed"
+            android:id="@+id/registered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registered">
+
+        </TextView>
+
+    </LinearLayout>
+
+
+
+
+
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

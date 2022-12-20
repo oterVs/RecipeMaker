@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_lgin"
+    app:startDestination="@id/fragmentLogIn">
+
+    <fragment
+        android:id="@+id/fragmentLogIn"
+        android:name="com.example.recipemaker.ui.login.FragmentLogIn"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" >
+        <action
+            android:id="@+id/action_fragmentLogIn_to_registeredFragment"
+            app:destination="@id/registeredFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registeredFragment"
+        android:name="com.example.recipemaker.ui.login.RegisteredFragment"
+        android:label="fragment_registered"
+        tools:layout="@layout/fragment_registered" >
+        <action
+            android:id="@+id/action_registeredFragment_to_fragmentLogIn"
+            app:destination="@id/fragmentLogIn" />
+        <action
+            android:id="@+id/action_registeredFragment_to_registerEmailFragment"
+            app:destination="@id/registerEmailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerEmailFragment"
+        android:name="com.example.recipemaker.RegisterEmailFragment"
+        android:label="fragment_register_email"
+        tools:layout="@layout/fragment_register_email" >
+        <action
+            android:id="@+id/action_registerEmailFragment_to_registeredFragment"
+            app:destination="@id/registeredFragment" />
+    </fragment>
+</navigation>
