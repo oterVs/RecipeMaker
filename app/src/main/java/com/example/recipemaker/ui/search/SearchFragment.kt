@@ -57,8 +57,9 @@ class SearchFragment : Fragment() {
                 Log.w(TAG, "Error getting documents.", exception)
             }
 
+        //println(listFood.size)
         binding.rvFood.adapter = FoodAdapter(listFood)
-        binding.rvFood.layoutManager = LinearLayoutManager(activity as LogIn)
+      //  binding.rvFood.layoutManager = LinearLayoutManager(activity as LogIn)
 /*
         binding.nextImg.setOnClickListener{
             binding.imgCarrusel.setImageResource(R.drawable.google)

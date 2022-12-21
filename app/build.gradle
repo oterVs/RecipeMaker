@@ -60,6 +60,9 @@ dependencies {
     //carrusel
     //implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
 
+    //images
+    implementation "com.squareup.picasso:picasso:2.71828"
+
 
 
 
