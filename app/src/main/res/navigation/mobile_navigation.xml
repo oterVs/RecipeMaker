@@ -14,10 +14,36 @@
         android:id="@+id/profileFragment"
         android:name="com.example.recipemaker.ui.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_addRecipeFragment"
+            app:destination="@id/addRecipeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.recipemaker.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_detailFood"
+            app:destination="@id/detailFood" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFood"
+        android:name="com.example.recipemaker.DetailFood"
+        android:label="fragment_detail_food"
+        tools:layout="@layout/fragment_detail_food" >
+        <action
+            android:id="@+id/action_detailFood_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addRecipeFragment"
+        android:name="com.example.recipemaker.AddRecipeFragment"
+        android:label="fragment_add_recipe"
+        tools:layout="@layout/fragment_add_recipe" >
+        <action
+            android:id="@+id/action_addRecipeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

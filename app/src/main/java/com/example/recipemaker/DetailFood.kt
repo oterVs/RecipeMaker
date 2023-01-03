@@ -5,6 +5,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.example.recipemaker.adapter.DetailAdapter
+import com.example.recipemaker.databinding.FragmentDetailFoodBinding
+import com.example.recipemaker.databinding.FragmentProfileBinding
+import com.example.recipemaker.domain.model.Recipe
+import com.example.recipemaker.ui.detail.DetailViewModel
+import com.example.recipemaker.ui.login.LoginViewModel
+import com.example.recipemaker.ui.login.SignUpViewModel
+import com.example.recipemaker.ui.search.RecicleRecipeViewModel
+import com.example.recipemaker.utils.FoodProvider
+import com.example.recipemaker.utils.toast
+import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
+import java.io.Serializable
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,17 +35,24 @@ private const val ARG_PARAM2 = "param2"
  * Use the [DetailFood.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class DetailFood : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    lateinit var binding : FragmentDetailFoodBinding
+    private val detailFood : DetailViewModel by viewModels()
+    private val signupView : SignUpViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+     /* setFragmentResultListener("requestKey") { key, bundle ->
+          // We use a String here, but any type that can be put in a Bundle is supported
+          val result = bundle.getString("bundleKey")
+          // Do something with the result...
+      }*/
+
+
     }
 
     override fun onCreateView(
@@ -34,26 +60,50 @@ class DetailFood : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_food, container, false)
+        binding = FragmentDetailFoodBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailFood.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetailFood().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initListeners()
+        initRecipe()
     }
+
+    private fun initListeners() {
+      //  activity?.toast(modelRecipe._itemSelected.)
+        //binding.titelDetailFood.text = modelRecipe.itemDataSelected?.title
+        binding.backSearch.setOnClickListener{
+            findNavController().navigate(R.id.searchFragment)
+        }
+        binding.addFavorite.setOnClickListener {
+
+            if(!FoodProvider.userLogger.favorites.contains(FoodProvider.itemSelected.id)){
+                FoodProvider.userLogger.favorites.add(FoodProvider.itemSelected.id)
+                signupView.saveUser(FoodProvider.userLogger)
+            }
+
+            //loginView.saveUser()
+        }
+        detailFood.itemSelected.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(activity as LogIn, it.title, Toast.LENGTH_SHORT).show()
+            println(it.title)
+            //binding.titelDetailFood.text = it.title
+        })
+
+    }
+    private fun initRecipe(){
+        val food = FoodProvider.itemSelected
+        binding.titelDetailFood.text = food.id
+
+        binding.rvSteps.adapter = DetailAdapter(food.steps.toMutableList()) {
+
+        }
+
+        Picasso.get().load(food.imageUrl).into(binding.ivDetailFood)
+    }
+
+
+
+
 }

@@ -10,48 +10,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardCarrusel"
-            android:layout_width="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
-                <androidx.appcompat.widget.SearchView
 
-                    style="Widget.Material3.SearchView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:elevation="10dp"
 
-                    android:id="@+id/searchFood"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCarrusel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
-
-                    >
-
-                </androidx.appcompat.widget.SearchView>
-                <ImageView
-                    app:layout_constraintTop_toBottomOf="@+id/searchFood"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    app:cardCornerRadius="30dp"
+                    >
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        >
+                        <androidx.appcompat.widget.SearchView
+                            android:id="@+id/search_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:colorPrimary="@color/seed"/>
+                    </androidx.appcompat.widget.Toolbar>
+
+                </androidx.cardview.widget.CardView>
+
+<!--
+                <ImageView
+
                     android:layout_width="match_parent"
                     android:layout_height="279dp"
-                    android:src="@drawable/foodback">
+                    android:src="@drawable/foodback"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent">
 
                 </ImageView>
 
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
+-->
 
 
         <LinearLayout
@@ -63,9 +65,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:orientation="vertical"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
             android:paddingEnd="10dp"
             android:paddingStart="10dp"
+            app:layout_constraintVertical_bias="0.1"
             >
 
             <LinearLayout
@@ -76,9 +80,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fáciles de realizar"
+                    android:text="Explora un gran número de recetas"
 
-                    android:textSize="20sp">
+                    android:textSize="23sp">
 
                 </TextView>
 
@@ -94,54 +98,20 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginBottom="10dp"
                 android:id="@+id/rvFood"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 >
             </androidx.recyclerview.widget.RecyclerView>
 
+
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/firstLinear"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:orientation="vertical"
-            >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fáciles de realizar">
-
-                </TextView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_navigate_next_24">
-                </ImageView>
-
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvFood2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-            </androidx.recyclerview.widget.RecyclerView>
-
-        </LinearLayout>
 
 
 

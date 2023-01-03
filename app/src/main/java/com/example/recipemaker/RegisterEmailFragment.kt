@@ -30,10 +30,19 @@ class RegisterEmailFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentRegisterEmailBinding.inflate(inflater,container,false)
-        binding.backRegistered.setOnClickListener{
-            findNavController().navigate(R.id.registeredFragment)
-        }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initListeners()
+
+    }
+    private fun initListeners(){
+        binding.backRegistered.setOnClickListener{
+            //findNavController().navigate(R.id.registeredFragment)
+            activity?.onBackPressed()
+        }
     }
 
 

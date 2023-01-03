@@ -12,7 +12,12 @@
         tools:layout="@layout/fragment_log_in" >
         <action
             android:id="@+id/action_fragmentLogIn_to_registeredFragment"
-            app:destination="@id/registeredFragment" />
+            app:destination="@id/registeredFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
     </fragment>
     <fragment
         android:id="@+id/registeredFragment"
@@ -21,18 +26,9 @@
         tools:layout="@layout/fragment_registered" >
         <action
             android:id="@+id/action_registeredFragment_to_fragmentLogIn"
-            app:destination="@id/fragmentLogIn" />
-        <action
-            android:id="@+id/action_registeredFragment_to_registerEmailFragment"
-            app:destination="@id/registerEmailFragment" />
+            app:destination="@id/fragmentLogIn"
+         />
+
     </fragment>
-    <fragment
-        android:id="@+id/registerEmailFragment"
-        android:name="com.example.recipemaker.RegisterEmailFragment"
-        android:label="fragment_register_email"
-        tools:layout="@layout/fragment_register_email" >
-        <action
-            android:id="@+id/action_registerEmailFragment_to_registeredFragment"
-            app:destination="@id/registeredFragment" />
-    </fragment>
+
 </navigation>

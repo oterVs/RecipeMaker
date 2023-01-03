@@ -37,6 +37,11 @@
         <item name="cornerSizeBottomLeft">125dp</item>
     </style>
 
+    <style name="Theme.SplashThem" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/window_back_ground</item>
+
+    </style>
+
 
     <style name="TextInput" parent="Theme.Material3.Light.NoActionBar">
 

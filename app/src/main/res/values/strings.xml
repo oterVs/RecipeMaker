@@ -2,4 +2,16 @@
     <string name="app_name">RecipeMaker</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login__error_user_no_registered">El usuario no registrado</string>
+    <string name="login__error_wrong_password">Contraseña incorrecta</string>
+    <string name="login__error_unknown_error">Algo salió mal</string>
+    <string name="login__login_button">Login</string>
+    <string name="login__error_enter_password">Contraseña incorrecta</string>
+    <string name="login__error_enter_email">El usuario o correo se ingresaron incorrectamente</string>
+    <string name="signup__signup_successfully">Se ha creado correctamente</string>
+    <string name="signup__error_email_already_registered">El correo ingresado ya existe</string>
+    <string name="signup__error_unknown_error">Algo salió mal</string>
+    <string name="signup__signup_button">Crear Cuenta</string>
+    <string name="signup__error_passwords_match">Las contraseñas no coinciden</string>
+    <string name="signup__error_password_insecure">Contraseña demasiado corta</string>
 </resources>

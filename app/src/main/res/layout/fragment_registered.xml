@@ -15,7 +15,7 @@
         android:layout_width="50dp"
         android:layout_height="45dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="15dp"
         android:src="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -43,18 +43,112 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp">
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/email"
+            android:layout_marginBottom="30dp">
+        </ImageView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filledTextField"
+            style="?attr/textInputFilledStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15sp"
+            android:backgroundTint="@android:color/transparent"
+            android:hint="User"
+            app:layout_constraintCircleRadius="12sp"
+            app:startIconDrawable="@drawable/ic_baseline_account_circle_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:background="@color/cardview_light_background"
+                android:layout_height="wrap_content"
+                android:id="@+id/retUser"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password"
+            style="?attr/textInputFilledStyle"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:hint="Password"
+            app:startIconDrawable="@drawable/ic_baseline_password_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/repPassword1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/cardview_light_background" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/Confirmpassword"
+            style="?attr/textInputFilledStyle"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:hint="Password"
+            app:startIconDrawable="@drawable/ic_baseline_password_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/repPassword2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/cardview_light_background" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
 
         <Button
-            android:height="60dp"
+            android:id="@+id/RegisteredEmail"
+
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:elevation="20dp"
+
+            android:textColor="@color/md_theme_light_surface"
+            android:text="Registrarse"
+            android:backgroundTint="@color/seed"
+            app:icon="@drawable/ic_baseline_email_24"
+            app:iconTint="@null"
+           >
+
+        </Button>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registrate con Google"
+            android:layout_marginBottom="15dp">
+
+        </TextView>
+
+        <Button
+
             android:id="@+id/registeredGoogle"
             android:elevation="20dp"
             style="@style/Widget.Material3.Button.ElevatedButton.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
-            android:textSize="20sp"
+
             android:backgroundTint="@color/md_theme_light_onSecondary"
             android:text="Google"
             android:textColor="@color/md_theme_dark_background"
@@ -64,46 +158,18 @@
 
         </Button>
 
-
-        <Button
-            android:height="60dp"
-            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20sp"
-            android:elevation="20dp"
-            android:textSize="20sp"
-            android:backgroundTint="@color/facebook"
-            android:text="Facebook"
-            android:textColor="@color/md_theme_light_surface"
-            app:icon="@drawable/facebook"
-            app:iconTint="@null"
-            >
-
-        </Button>
-
-        <Button
-            android:id="@+id/RegisteredEmail"
-            android:height="60dp"
-            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20sp"
-            android:elevation="20dp"
-            android:textSize="20sp"
-            android:textColor="@color/md_theme_light_surface"
-            android:text="Email"
-            android:backgroundTint="@color/seed"
-            app:icon="@drawable/ic_baseline_email_24"
-            app:iconTint="@null"
-           >
-
-        </Button>
-
     </LinearLayout>
 
 
-
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/pbSignUp"
+        android:visibility="invisible"></ProgressBar>
 
 
 

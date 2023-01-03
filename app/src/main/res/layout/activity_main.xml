@@ -7,16 +7,32 @@
     tools:context=".MainActivity"
     android:background="@color/cardview_light_background">
 
+<!--
+   <TextView
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       android:text="halo"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
 
+   </TextView>
+-->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:navGraph="@navigation/nav_lgin"
+        app:defaultNavHost="true"
 
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
 
-    <include layout="@layout/content_main" />
-
-
-
-
-
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
