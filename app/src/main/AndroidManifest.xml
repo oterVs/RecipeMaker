@@ -18,7 +18,7 @@
 
         <activity
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
-            android:name=".ui.splash.SplashActivity"
+            android:name=".ui.activities.SplashActivity"
             android:exported="true"
             >
             <intent-filter>
@@ -38,14 +38,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".LogIn"
+            android:name=".ui.activities.LogIn"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"

@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_photo" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.recipemaker.ui.profile.ProfileFragment"
+        android:name="com.example.recipemaker.ui.fragments.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/addRecipeFragment"
-        android:name="com.example.recipemaker.AddRecipeFragment"
+        android:name="com.example.recipemaker.ui.fragments.addfood.AddRecipeFragment"
         android:label="fragment_add_recipe"
         tools:layout="@layout/fragment_add_recipe" >
         <action

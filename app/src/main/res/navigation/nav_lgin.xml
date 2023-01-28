@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentLogIn"
-        android:name="com.example.recipemaker.ui.login.FragmentLogIn"
+        android:name="com.example.recipemaker.ui.fragments.login.FragmentLogIn"
         android:label="fragment_log_in"
 
         tools:layout="@layout/fragment_log_in" >
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/registeredFragment"
-        android:name="com.example.recipemaker.ui.login.RegisteredFragment"
+        android:name="com.example.recipemaker.ui.fragments.signup.RegisteredFragment"
         android:label="fragment_registered"
         tools:layout="@layout/fragment_registered" >
         <action
