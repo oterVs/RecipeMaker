@@ -37,7 +37,7 @@
         <item name="cornerSizeBottomLeft">125dp</item>
     </style>
 
-    <style name="Theme.SplashThem" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Theme.SplashThem" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/window_back_ground</item>
 
     </style>

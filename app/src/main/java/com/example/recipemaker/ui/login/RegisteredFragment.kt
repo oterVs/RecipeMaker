@@ -22,6 +22,7 @@ import com.example.recipemaker.domain.model.User
 import com.example.recipemaker.utils.Constants.EMAIL_ALREADY_EXISTS
 import com.example.recipemaker.utils.DataState
 import com.example.recipemaker.utils.isInputEmpty
+import com.example.recipemaker.utils.snackBar
 import com.example.recipemaker.utils.toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -168,7 +169,6 @@ class RegisteredFragment : Fragment() {
     private fun createUser(): User {
 
         val email = binding.retUser.text.toString()
-
         return User(
             email = email
         )
@@ -180,7 +180,7 @@ class RegisteredFragment : Fragment() {
             requireActivity().isInputEmpty(binding.retUser, true) -> false
 
             isPasswordInsecure() -> {
-                activity?.toast(getString(R.string.signup__error_passwords_match))
+                activity?.snackBar(getString(R.string.signup__error_passwords_match),binding.RegisteredEmail)
                 false
             }
 
@@ -191,7 +191,7 @@ class RegisteredFragment : Fragment() {
 
     private fun isPasswordInsecure(): Boolean{
         return if (binding.repPassword1.text.toString().length <= 6){
-            activity?.toast(getString(R.string.signup__error_password_insecure))
+            activity?.snackBar(getString(R.string.signup__error_password_insecure),binding.RegisteredEmail)
             true
         } else {
             binding.repPassword1.text.toString() != binding.repPassword2.text.toString()

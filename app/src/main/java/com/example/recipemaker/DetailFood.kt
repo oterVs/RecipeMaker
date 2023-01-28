@@ -11,6 +11,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.airbnb.lottie.LottieAnimationView
 import com.example.recipemaker.adapter.DetailAdapter
 import com.example.recipemaker.databinding.FragmentDetailFoodBinding
 import com.example.recipemaker.databinding.FragmentProfileBinding
@@ -73,11 +74,13 @@ class DetailFood : Fragment() {
     private fun initListeners() {
       //  activity?.toast(modelRecipe._itemSelected.)
         //binding.titelDetailFood.text = modelRecipe.itemDataSelected?.title
+        var like = false
         binding.backSearch.setOnClickListener{
             findNavController().navigate(R.id.searchFragment)
         }
         binding.addFavorite.setOnClickListener {
 
+            like = likeAnimation(binding.addFavorite, R.raw.lotie1, like)
             if(!FoodProvider.userLogger.favorites.contains(FoodProvider.itemSelected.id)){
                 FoodProvider.userLogger.favorites.add(FoodProvider.itemSelected.id)
                 signupView.saveUser(FoodProvider.userLogger)
@@ -92,6 +95,18 @@ class DetailFood : Fragment() {
         })
 
     }
+
+    private fun likeAnimation(imageView: LottieAnimationView, animation: Int, like: Boolean): Boolean {
+        if(!like){
+            imageView.setAnimation(animation)
+            imageView.playAnimation()
+        } else {
+            imageView.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
+        return !like
+    }
+
+
     private fun initRecipe(){
         val food = FoodProvider.itemSelected
         binding.titelDetailFood.text = food.id

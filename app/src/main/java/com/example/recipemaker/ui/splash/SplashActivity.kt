@@ -1,87 +1,67 @@
 package com.example.recipemaker.ui.splash
 
 import android.content.Intent
-import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
+import com.airbnb.lottie.LottieAnimationView
 import com.example.recipemaker.LogIn
 import com.example.recipemaker.MainActivity
-import com.example.recipemaker.ui.login.LoginViewModel
-import com.example.recipemaker.utils.Constants.SHARED_EMAIL
-import com.example.recipemaker.utils.Constants.SHARED_PASSWORD
-import com.example.recipemaker.utils.DataState
-import com.example.recipemaker.utils.toast
-import com.google.firebase.auth.FirebaseAuth
+import com.example.recipemaker.R
+import com.example.recipemaker.databinding.ActivitySplashBinding
+
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
-    private val viewModel : DataStoreViewModel by viewModels()
 
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
+    lateinit var binding: ActivitySplashBinding
+    private val viewModel : DataStoreViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        var like = true
+       // like = likeAnimation(binding.lotiesplash, R.raw.food, like)
+
+        binding.lotiesplash.playAnimation()
         //startActivity(Intent(this, MainActivity::class.java))
         //finish()
-       // println(auth.currentUser?.uid ?: "No hay usuario")
-
+        // println(auth.currentUser?.uid ?: "No hay usuario")
         //initObservers()
         //viewModel.storeIsLogIn(false)
-        println(viewModel.getStoreIsLogIn().toString())
-        if (viewModel.getStoreIsLogIn()){
-            startActivity(Intent(this, LogIn::class.java))
+
+        Handler().postDelayed( { //Aqui colocas la transición a otro activity
+            println(viewModel.getStoreIsLogIn().toString())
+            if (viewModel.getStoreIsLogIn()){
+                startActivity(Intent(this@SplashActivity, LogIn::class.java))
+                finish()
+            } else {
+                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                finish()
+            }
             finish()
+        }, 4000)
+
+
+
+
+
+    }
+
+    private fun likeAnimation(imageView: LottieAnimationView, animation: Int, like: Boolean): Boolean {
+        if(!like){
+            imageView.setAnimation(animation)
+            imageView.playAnimation()
         } else {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+            imageView.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
+        return !like
     }
 
-    /*
-    private fun initObservers(){
-        viewModel.loginState.observe(this, Observer { dataState ->
-            when(dataState){
-                is DataState.Success<Boolean> -> {
-                    viewModel.getUserData()
-                }
-                is DataState.Error -> {
-                    toast("La contraseña guardada ya no es válida")
-                }
-
-                else -> Unit
-            }
-        })
-
-        viewModel.userDataState.observe(this, Observer { dataState ->
-            when(dataState){
-                is DataState.Success<Boolean> -> {
-
-                    startActivity(Intent(this, LogIn::class.java))
-                    finish()
-                }
-                is DataState.Error -> {
-                    toast("La contraseña guardada ya no es válida")
-                }
-
-                else -> Unit
-            }
-        })
-
-
-    }
-
-    private fun isUserSaved(): Boolean{
-        return getSavedEmail()?.isNotEmpty() == true && getSavedPassword()?.isNotEmpty() == true
-    }
-
-    private fun getSavedEmail() = sharedPreferences.getString(SHARED_EMAIL, "")
-    private fun getSavedPassword() = sharedPreferences.getString(SHARED_PASSWORD, "")
-*/
 }

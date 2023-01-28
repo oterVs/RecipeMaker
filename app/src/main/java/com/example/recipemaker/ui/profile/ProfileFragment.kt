@@ -29,6 +29,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
@@ -81,7 +82,8 @@ class ProfileFragment : Fragment() {
                    // activity?.toast(it.data.email)
                     activity?.toast(dataStore.getStoreIsLogIn().toString())
                     FoodProvider.userLogger = it.data
-                    binding.nameProfile.text = it.data.email
+                    binding.nameProfile.text = it.data.name
+                    Picasso.get().load(it.data.photoUrl).into(binding.profileimg)
 
                 }
                 else -> Unit
@@ -127,7 +129,7 @@ class ProfileFragment : Fragment() {
     }
 
     fun initRecicleView() {
-        adapter = FoodAdapter(listFood){
+        adapter = FoodAdapter(listFood,225){
         }
 
         binding.rvProfile.adapter = adapter

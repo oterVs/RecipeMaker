@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.viewModelScope
 import com.example.recipemaker.domain.model.User
+import com.example.recipemaker.domain.model.UserResponse
 import com.example.recipemaker.domain.repository.LoginRepository
+import com.example.recipemaker.domain.repository.UserApiRepository
 import com.example.recipemaker.utils.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.scopes.ViewModelScoped
@@ -19,7 +21,8 @@ import kotlin.math.log
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginRepository: LoginRepository
+    private val loginRepository: LoginRepository,
+    private val userApiRepository: UserApiRepository
 ): ViewModel() {
 
     private val _loginState :MutableLiveData<DataState<Boolean>> = MutableLiveData()
@@ -30,15 +33,23 @@ class LoginViewModel @Inject constructor(
     val userDataState : LiveData<DataState<Boolean>>
         get() = _userDataState
 
-
-
-
     private val _logOutState :MutableLiveData<DataState<Boolean>> = MutableLiveData()
     val logOutState : LiveData<DataState<Boolean>>
         get() = _logOutState
 
 
+    private val _usersapi : MutableLiveData<DataState<UserResponse>> = MutableLiveData()
+    val usersapi : LiveData<DataState<UserResponse>>
+        get() = _usersapi
 
+
+    fun getUsers(){
+        viewModelScope.launch {
+            userApiRepository.getUsers().onEach { dataState ->
+                _usersapi.value = dataState
+            }.launchIn(viewModelScope)
+        }
+    }
 
 
     fun login(email: String, password: String){

@@ -13,25 +13,26 @@
 
         android:id="@+id/backLogin"
         android:layout_width="50dp"
-        android:layout_height="45dp"
+        android:layout_height="35dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="15dp"
         android:src="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/signup_back_login">
 
     </ImageView>
 
     <TextView
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/md_theme_dark_inverseOnSurface"
-        android:text="Registered"
+        android:text="@string/signup_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/backLogin"
-        app:layout_constraintHorizontal_bias="0.4">
+        app:layout_constraintHorizontal_bias="0.25">
 
     </TextView>
 
@@ -48,10 +49,11 @@
         android:gravity="center">
 
         <ImageView
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:src="@drawable/email"
-            android:layout_marginBottom="30dp">
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:src="@drawable/register1"
+            android:layout_marginBottom="30dp"
+            android:contentDescription="@string/log_in_iniciarsesion">
         </ImageView>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -61,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15sp"
             android:backgroundTint="@android:color/transparent"
-            android:hint="User"
+            android:hint="@string/log_in_email"
             app:layout_constraintCircleRadius="12sp"
             app:startIconDrawable="@drawable/ic_baseline_account_circle_24">
 
@@ -81,7 +83,7 @@
 
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
-            android:hint="Password"
+            android:hint="@string/log_in_password"
             app:startIconDrawable="@drawable/ic_baseline_password_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -98,7 +100,7 @@
 
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
-            android:hint="Password"
+            android:hint="@string/signin_confirmpassword"
             app:startIconDrawable="@drawable/ic_baseline_password_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -110,10 +112,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
-
-
-
         <Button
             android:id="@+id/RegisteredEmail"
 
@@ -121,21 +119,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
-            android:elevation="20dp"
-
-            android:textColor="@color/md_theme_light_surface"
-            android:text="Registrarse"
             android:backgroundTint="@color/seed"
+
+            android:elevation="20dp"
+            android:text="@string/signup_register"
+            android:textColor="@color/md_theme_light_surface"
             app:icon="@drawable/ic_baseline_email_24"
             app:iconTint="@null"
-           >
+            tools:ignore="DuplicateSpeakableTextCheck">
 
         </Button>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registrate con Google"
+            android:text="@string/signup_registergoogle"
             android:layout_marginBottom="15dp">
 
         </TextView>
@@ -150,7 +148,7 @@
             android:layout_marginBottom="20sp"
 
             android:backgroundTint="@color/md_theme_light_onSecondary"
-            android:text="Google"
+            android:text="@string/log_in_googletext"
             android:textColor="@color/md_theme_dark_background"
             app:icon="@drawable/google"
             app:iconTint="@null"
@@ -169,7 +167,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/pbSignUp"
-        android:visibility="invisible"></ProgressBar>
+        android:visibility="invisible"/>
 
 
 

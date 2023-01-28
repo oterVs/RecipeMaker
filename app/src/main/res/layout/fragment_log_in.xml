@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.login.FragmentLogIn">
+    tools:context=".ui.login.FragmentLogIn"
+    android:windowEnterAnimation="@anim/slide_in_right"
+    android:windowExitAnimation="@anim/slide_out_left">
 
 
     <com.google.android.material.card.MaterialCardView
@@ -17,21 +19,26 @@
         android:backgroundTint="@color/seed"
         style="?attr/materialCardViewFilledStyle"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.Cut"
-
+        android:elevation="10dp"
+        app:cardElevation="30dp"
         >
 
         <LinearLayout
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center">
 
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_width="275dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/iconlogin"
+                android:src="@drawable/loginsplash"
+                android:contentDescription="@string/log_in_descimg"
 
-                ></ImageView>
+                />
 
 
         </LinearLayout>
@@ -45,29 +52,32 @@
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="Recipe Maker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="35sp"
         app:layout_constraintHorizontal_bias="0.95"
         android:textColor="@color/md_theme_light_surface"
+        android:elevation="40dp"
         >
 
     </TextView>
 
+
     <LinearLayout
-        app:layout_constraintVertical_bias="0.3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
         android:paddingStart="25dp"
         android:paddingEnd="25dp"
-        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card">
+        app:layout_constraintTop_toBottomOf="@+id/card"
+        app:layout_constraintVertical_bias="0.317">
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -77,17 +87,16 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:backgroundTint="@android:color/transparent"
-            android:hint="User"
+            android:hint="@string/log_in_email"
             app:layout_constraintCircleRadius="12sp"
             app:startIconDrawable="@drawable/ic_baseline_account_circle_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:background="@color/cardview_light_background"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
                 android:id="@+id/etUser"
-                 />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/cardview_light_background"
+                android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,25 +107,25 @@
 
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
-            android:hint="Password"
+            android:hint="@string/log_in_password"
             app:startIconDrawable="@drawable/ic_baseline_password_24">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/etPassword"
                 android:background="@color/cardview_light_background" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-
             android:id="@+id/buttonLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15sp"
             android:backgroundTint="@color/md_theme_dark_inverseOnSurface"
-            android:text="Login"
+            android:elevation="20dp"
+            android:text="@string/log_in_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -127,43 +136,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15sp"
-            android:text="Or Login With">
+            android:text="@string/log_in_iniciarsesion">
 
         </TextView>
 
 
+        <Button
+            android:id="@+id/logInGoogle"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:backgroundTint="@color/md_theme_light_onSecondary"
+            android:elevation="20dp"
+            android:text="@string/log_in_googletext"
+            android:textColor="@color/md_theme_dark_background"
+            app:icon="@drawable/google"
+            app:iconTint="@null">
 
-            <Button
-                style="@style/Widget.Material3.Button.ElevatedButton.Icon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="25dp"
-                android:backgroundTint="@color/md_theme_light_onSecondary"
-                android:text="Google"
-                android:textColor="@color/md_theme_dark_background"
-                app:icon="@drawable/google"
-                app:iconTint="@null"
-                android:elevation="20dp"
-                android:id="@+id/logInGoogle">
-
-            </Button>
-
+        </Button>
 
 
         <TextView
-            android:textStyle="bold"
-            android:textColor="@color/seed"
             android:id="@+id/registered"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registered">
+            android:text="@string/log_in_register"
+            android:textColor="@color/seed"
+            android:textStyle="bold">
 
         </TextView>
 
     </LinearLayout>
-
-
-
 
     <ProgressBar
         android:id="@+id/pbSignIn"

@@ -63,7 +63,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         searchView = binding.searchView
         list = FoodProvider.food.toMutableList()
-        adapter = FoodAdapter(list){ recipe ->
+        adapter = FoodAdapter(list,325){ recipe ->
             onItemSelected(recipe)
         }
         binding.rvFood.adapter = adapter
@@ -129,7 +129,7 @@ class SearchFragment : Fragment() {
 
         modelRecipe.easyFood.observe(viewLifecycleOwner, Observer {
             list = it.toMutableList()
-            binding.rvFood.adapter = FoodAdapter(list){ recipe ->
+            binding.rvFood.adapter = FoodAdapter(list,325){ recipe ->
                 onItemSelected(recipe)
             }
         })

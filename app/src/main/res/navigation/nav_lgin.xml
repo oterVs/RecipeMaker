@@ -9,8 +9,10 @@
         android:id="@+id/fragmentLogIn"
         android:name="com.example.recipemaker.ui.login.FragmentLogIn"
         android:label="fragment_log_in"
+
         tools:layout="@layout/fragment_log_in" >
         <action
+
             android:id="@+id/action_fragmentLogIn_to_registeredFragment"
             app:destination="@id/registeredFragment"
             app:enterAnim="@anim/slide_in_right"

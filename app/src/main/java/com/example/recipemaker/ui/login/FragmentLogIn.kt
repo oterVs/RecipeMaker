@@ -2,7 +2,6 @@ package com.example.recipemaker.ui.login
 
 import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.fragment.app.Fragment
@@ -11,28 +10,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recipemaker.LogIn
 import com.example.recipemaker.MainActivity
 import com.example.recipemaker.R
 import com.example.recipemaker.databinding.FragmentLogInBinding
-import com.example.recipemaker.di.DataStoreModule
 import com.example.recipemaker.domain.model.User
+import com.example.recipemaker.domain.model.UserApiItem
+import com.example.recipemaker.domain.model.UserResponse
 import com.example.recipemaker.ui.splash.DataStoreViewModel
-import com.example.recipemaker.utils.Constants.SHARED_EMAIL
-import com.example.recipemaker.utils.Constants.SHARED_PASSWORD
 import com.example.recipemaker.utils.Constants.USER_NOT_EXISTS
 import com.example.recipemaker.utils.Constants.WRONG_PASSWORD
 import com.example.recipemaker.utils.DataState
 import com.example.recipemaker.utils.isInputEmpty
+import com.example.recipemaker.utils.snackBar
 import com.example.recipemaker.utils.toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,13 +44,14 @@ class FragmentLogIn : Fragment() {
     private lateinit var firebaseAut : FirebaseAuth
     private lateinit var googleSignInClient : GoogleSignInClient
 
+
+    private var usuariosApi : MutableList<UserApiItem> = mutableListOf()
+
     private val viewModel : LoginViewModel by viewModels()
     private val viewModelS : SignUpViewModel by viewModels()
     private val dataStore : DataStoreViewModel by viewModels()
 
 
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +62,6 @@ class FragmentLogIn : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
 
         binding = FragmentLogInBinding.inflate(inflater,container,false)
         return binding.root
@@ -71,7 +70,7 @@ class FragmentLogIn : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.getUsers()
         initObservers()
         initListeners()
         setup()
@@ -79,7 +78,6 @@ class FragmentLogIn : Fragment() {
     }
 
     private fun setup(){
-
         firebaseAut = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -87,11 +85,20 @@ class FragmentLogIn : Fragment() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(activity as MainActivity, gso)
-
     }
 
 
     private fun initObservers(){
+
+        viewModel.usersapi.observe(viewLifecycleOwner, Observer { dataState ->
+            when(dataState){
+                is DataState.Success<UserResponse> -> {
+                    usuariosApi = dataState.data
+                }
+                else -> Unit
+            }
+        })
+
         viewModel.loginState.observe(viewLifecycleOwner, Observer { dataState ->
             when(dataState){
                 is DataState.Success<Boolean> -> {
@@ -129,13 +136,6 @@ class FragmentLogIn : Fragment() {
 
     }
 
-    private fun manageUserLogin() {
-        //sharedPreferences.edit().putString(SHARED_EMAIL, binding.etUser.text.toString().trim()).apply()
-        //sharedPreferences.edit().putString(SHARED_PASSWORD, binding.etPassword.text.toString().trim()).apply()
-        dataStore.storeEmail(binding.etUser.text.toString())
-        dataStore.storeIsLogIn(true)
-    }
-
     private fun initListeners(){
         binding.buttonLogin.setOnClickListener{
             loginUser()
@@ -147,6 +147,13 @@ class FragmentLogIn : Fragment() {
             signInGoogle()
         }
     }
+    private fun manageUserLogin() {
+
+        dataStore.storeEmail(binding.etUser.text.toString())
+        dataStore.storeIsLogIn(true)
+    }
+
+
 
     private fun loginUser(){
         if (isUserDataOk()){
@@ -155,22 +162,36 @@ class FragmentLogIn : Fragment() {
             val email = binding.etUser.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
 
-            viewModel.login(email, password)
+            var isactive = false
+
+            for(user in usuariosApi){
+                if(user.email == email && user.status == "inactive"){
+                    isactive = true
+                    break;
+                }
+            }
+
+            if(!isactive){
+                viewModel.login(email, password)
+            } else {
+                activity?.toast("Usuario inactivo")
+            }
+
+           // viewModel.login(email, password)
         }
     }
 
     private fun isUserDataOk(): Boolean{
         return when{
             requireActivity().isInputEmpty(binding.etUser, true) -> {
-                activity?.toast(getString(R.string.login__error_enter_email))
+               // activity?.toast(getString(R.string.login__error_enter_email))
+                activity?.snackBar(getString(R.string.login__error_enter_email),binding.buttonLogin)
                 false
             }
-
             requireActivity().isInputEmpty(binding.etPassword, true) -> {
-                activity?.toast(getString(R.string.login__error_enter_password))
+                activity?.snackBar(getString(R.string.login__error_enter_password),binding.buttonLogin)
                 false
             }
-
             else ->{
                 true // El usuario mete todos los datos
             }
@@ -179,9 +200,9 @@ class FragmentLogIn : Fragment() {
 
     private fun manageLoginErrorMessages(exception: Exception) {
         when(exception.message){
-            USER_NOT_EXISTS -> { activity?.toast(getString(R.string.login__error_user_no_registered)) }
-            WRONG_PASSWORD -> { activity?.toast(getString(R.string.login__error_wrong_password)) }
-            else -> { activity?.toast(getString(R.string.login__error_unknown_error)) }
+            USER_NOT_EXISTS -> { activity?.snackBar(getString(R.string.login__error_user_no_registered),binding.buttonLogin) }
+            WRONG_PASSWORD -> { activity?.snackBar(getString(R.string.login__error_wrong_password),binding.buttonLogin) }
+            else -> { activity?.snackBar(getString(R.string.login__error_unknown_error),binding.buttonLogin) }
         }
     }
 
@@ -197,6 +218,7 @@ class FragmentLogIn : Fragment() {
         binding.pbSignIn.visibility = View.VISIBLE
     }
 
+
     private fun signInGoogle() {
         val signInIntent = googleSignInClient.signInIntent
         launcher.launch(signInIntent)
@@ -209,7 +231,6 @@ class FragmentLogIn : Fragment() {
             handleResults(task)
         }
     }
-
     private fun handleResults(task: Task<GoogleSignInAccount>) {
         if(task.isSuccessful){
             val account : GoogleSignInAccount? = task.result
@@ -220,7 +241,6 @@ class FragmentLogIn : Fragment() {
             Toast.makeText(activity as MainActivity, task.exception.toString(), Toast.LENGTH_SHORT).show()
         }
     }
-
     private fun updateUI(account: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         firebaseAut.signInWithCredential(credential).addOnCompleteListener {
@@ -231,7 +251,7 @@ class FragmentLogIn : Fragment() {
                 //userViewModel.setUser(account.email ?: "default")
 
                 //viewModel.userExist(account.email ?: "no")
-                viewModelS.saveUser(User(email = account.email ?: "Sin correo",id = account.email ?: "Sin id"))
+                viewModelS.saveUser(User(email = account.email ?: "Sin correo",id = account.email ?: "Sin id", photoUrl = account.photoUrl.toString() , name = account.familyName ?: "Chefsito"))
                 dataStore.storeEmail(account.email ?: "Sin correo")
                 dataStore.storeIsLogIn(true)
                 startActivity(Intent(requireContext(), LogIn::class.java))

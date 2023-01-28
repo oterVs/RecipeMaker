@@ -10,8 +10,8 @@
     <!-- TODO: Update blank fragment layout -->
     <ImageView
         android:id="@+id/profileLogOut"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_margin="16dp"
         android:src="@drawable/ic_baseline_logout_24"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,12 +39,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="55sp"
+        android:layout_marginTop="45dp"
         app:cardCornerRadius="50dp"
         android:id="@+id/profileCardImg">
 
         <ImageView
-
+            android:id="@+id/profileimg"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/profile"
@@ -98,11 +98,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvProfile"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="370dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tabsProfile"
+        app:layout_constraintVertical_bias="0"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
