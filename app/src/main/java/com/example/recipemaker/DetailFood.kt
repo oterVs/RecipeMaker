@@ -1,4 +1,4 @@
-package com.example.recipemaker.ui.fragments.detaifood
+package com.example.recipemaker
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,23 +10,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.airbnb.lottie.LottieAnimationView
-import com.example.recipemaker.R
 import com.example.recipemaker.ui.rview.adapter.DetailAdapter
 import com.example.recipemaker.databinding.FragmentDetailFoodBinding
 import com.example.recipemaker.ui.activities.LogIn
-import com.example.recipemaker.ui.fragments.detaifood.DetailViewModel
+import com.example.recipemaker.ui.fragments.detailfood.DetailViewModel
 import com.example.recipemaker.ui.fragments.signup.SignUpViewModel
 import com.example.recipemaker.utils.FoodProvider
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
 
 @AndroidEntryPoint
 class DetailFood : Fragment() {
-    // TODO: Rename and change types of parameters
 
     lateinit var binding : FragmentDetailFoodBinding
     private val detailFood : DetailViewModel by viewModels()
@@ -62,15 +57,19 @@ class DetailFood : Fragment() {
     private fun initListeners() {
       //  activity?.toast(modelRecipe._itemSelected.)
         //binding.titelDetailFood.text = modelRecipe.itemDataSelected?.title
-        var like = false
+        var like = FoodProvider.userLogger.favorites.contains(FoodProvider.itemSelected.id)
         binding.backSearch.setOnClickListener{
             findNavController().navigate(R.id.searchFragment)
         }
         binding.addFavorite.setOnClickListener {
 
             like = likeAnimation(binding.addFavorite, R.raw.lotie1, like)
+
             if(!FoodProvider.userLogger.favorites.contains(FoodProvider.itemSelected.id)){
                 FoodProvider.userLogger.favorites.add(FoodProvider.itemSelected.id)
+                signupView.saveUser(FoodProvider.userLogger)
+            } else {
+                FoodProvider.userLogger.favorites.remove(FoodProvider.itemSelected.id)
                 signupView.saveUser(FoodProvider.userLogger)
             }
 
@@ -97,7 +96,7 @@ class DetailFood : Fragment() {
 
     private fun initRecipe(){
         val food = FoodProvider.itemSelected
-        binding.titelDetailFood.text = food.id
+        binding.titelDetailFood.text = food.title
 
         binding.rvSteps.adapter = DetailAdapter(food.steps.toMutableList()) {
 

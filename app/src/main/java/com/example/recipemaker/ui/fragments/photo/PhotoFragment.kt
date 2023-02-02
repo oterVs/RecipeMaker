@@ -1,4 +1,4 @@
-package com.example.recipemaker
+package com.example.recipemaker.ui.fragments.photo
 
 import android.content.Context
 import android.content.Intent
@@ -14,8 +14,11 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.recipemaker.ui.rview.adapter.FoodAdapter
+import com.example.recipemaker.ObjectDetectionHelper
+import com.example.recipemaker.R
 import com.example.recipemaker.databinding.FragmentPhotoBinding
+import com.example.recipemaker.ui.rview.adapter.FoodAdapter
+
 import com.example.recipemaker.domain.model.Recipe
 import com.example.recipemaker.ui.activities.LogIn
 import com.example.recipemaker.utils.FoodProvider
@@ -29,15 +32,10 @@ import org.tensorflow.lite.task.vision.detector.Detection
 import java.io.IOException
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 
 @AndroidEntryPoint
 class PhotoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
 
 
     companion object {
@@ -76,7 +74,7 @@ class PhotoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = FoodAdapter(listResult,333){
+        adapter = FoodAdapter(listResult,333,333){
             println("something")
         }
         binding.rvResult.adapter = adapter
@@ -137,9 +135,6 @@ class PhotoFragment : Fragment() {
     }
 
 
-    private fun camera(){
-
-    }
 
     private fun getSampleImage(drawable: Int): Bitmap {
         /* return BitmapFactory.decodeResource(resources, drawable, BitmapFactory.Options().apply {

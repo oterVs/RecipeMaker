@@ -28,8 +28,8 @@ class AddRecipeFragment : Fragment() {
 
     lateinit var binding : FragmentAddRecipeBinding
     lateinit var image : Uri
-    private val stepsl : MutableList<String> = mutableListOf("1")
-    private val ingredients : MutableList<String> = mutableListOf("1", "calentar la comida", "hervir el agua")
+    private val stepsl : MutableList<String> = mutableListOf()
+    private val ingredients : MutableList<String> = mutableListOf()
 
     private lateinit var adapters : DetailAdapter
     private lateinit var adaptari : DetailAdapter
@@ -134,7 +134,7 @@ class AddRecipeFragment : Fragment() {
         binding.steps.setOnEditorActionListener { v, keyCode, event ->
           // activity?.toast(keyCode.toString())
             if(keyCode == 0 ){
-                stepsl.add(binding.ingredientes.text.toString())
+                stepsl.add(binding.steps.text.toString())
                 adapters.notifyItemInserted(stepsl.size)
                 binding.ingredientes.setText("")
                 true

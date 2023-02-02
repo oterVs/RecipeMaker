@@ -250,8 +250,8 @@ class FragmentLogIn : Fragment() {
                 //userViewModel.setUser(account.email ?: "default")
 
                 //viewModel.userExist(account.email ?: "no")
-                var namel = "${account.displayName} ${account.familyName}"
-                viewModelS.saveUser(User(email = account.email ?: "Sin correo",id = account.email ?: "Sin id", photoUrl = account.photoUrl.toString() , name = namel ?: "Chefsito"))
+                var namel = "${account.givenName}"
+                viewModelS.saveUser(User(email = account.email ?: "Sin correo",id = account.email ?: "Sin id", photoUrl = account.photoUrl.toString() , name = "Vicente Saavedra" ?: "Chefsito"))
                 dataStore.storeEmail(account.email ?: "Sin correo")
                 dataStore.storeIsLogIn(true)
                 startActivity(Intent(requireContext(), LogIn::class.java))

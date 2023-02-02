@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.detailfood.DetailFood">
+    tools:context=".DetailFood">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,34 +83,31 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/titelDetailFood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="example"
+                    android:textSize="30sp"
+                    android:layout_weight="0.6"
+                    >
+                </TextView>
+
+
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/addFavorite"
                     android:layout_margin="5dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@drawable/ic_baseline_favorite_border_24">
 
                 </com.airbnb.lottie.LottieAnimationView>
 
 
-                <ImageView
-                    android:layout_margin="5dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_baseline_share_24"
-                    >
-                </ImageView>
+
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/titelDetailFood"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="example"
-                android:textSize="40sp"
-                >
-            </TextView>
 
 
 

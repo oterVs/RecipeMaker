@@ -1,44 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.search.SearchFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
 
 
-
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardCarrusel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    app:cardCornerRadius="30dp"
-                    >
-                    <androidx.appcompat.widget.Toolbar
-                        android:id="@+id/toolbar"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+
+                        android:id="@+id/cardCarrusel"
+                        android:layout_height="70dp"
+                        android:background="@color/seed"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         >
-                        <androidx.appcompat.widget.SearchView
-                            android:id="@+id/search_view"
+
+                        <androidx.cardview.widget.CardView
+                            android:elevation="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="10dp"
+
+                            android:id="@+id/searchCard"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:colorPrimary="@color/seed"/>
-                    </androidx.appcompat.widget.Toolbar>
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:cardCornerRadius="35dp"
+                            >
 
-                </androidx.cardview.widget.CardView>
+                            <androidx.appcompat.widget.Toolbar
+                                android:id="@+id/toolbar"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:backgroundTint="@color/md_theme_light_onPrimary"
+                                >
+                                <androidx.appcompat.widget.SearchView
+
+                                    android:id="@+id/search_view"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:colorPrimary="@color/md_theme_light_onPrimary"/>
+                            </androidx.appcompat.widget.Toolbar>
+                        </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+                <ImageView
+                    android:layout_marginTop="-5dp"
+                    android:id="@+id/wave"
+                    android:layout_width="match_parent"
+                    android:layout_height="95dp"
+                    android:src="@drawable/wave"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardCarrusel">
+
+                </ImageView>
+    <TextView
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardCarrusel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Explora entre un gran número de recetas"
+        android:id="@+id/titles"
+        android:textSize="20sp"
+        android:layout_marginStart="10dp">
+
+    </TextView>
 
 <!--
                 <ImageView
@@ -56,66 +101,24 @@
 -->
 
 
-        <LinearLayout
-            android:id="@+id/firstLinear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/cardCarrusel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp"
-            app:layout_constraintVertical_bias="0.1"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Explora un gran número de recetas"
-
-                    android:textSize="23sp">
-
-                </TextView>
-
-                <ImageView
-
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-
-                    android:src="@drawable/ic_baseline_navigate_next_24">
-                </ImageView>
 
 
-            </LinearLayout>
+
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titles"
+                android:layout_marginBottom="5dp"
                 android:id="@+id/rvFood"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="525dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 >
+
             </androidx.recyclerview.widget.RecyclerView>
-
-
-
-        </LinearLayout>
-
-
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
@@ -171,4 +174,4 @@
     -->
 
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

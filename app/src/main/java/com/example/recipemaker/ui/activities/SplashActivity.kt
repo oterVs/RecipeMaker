@@ -3,11 +3,13 @@ package com.example.recipemaker.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieAnimationView
 import com.example.recipemaker.R
 import com.example.recipemaker.databinding.ActivitySplashBinding
+
 import com.example.recipemaker.ui.fragments.session.DataStoreViewModel
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,6 +53,11 @@ class SplashActivity : AppCompatActivity() {
 
 
 
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        // menu.add("Save");
+        return true
     }
 
     private fun likeAnimation(imageView: LottieAnimationView, animation: Int, like: Boolean): Boolean {

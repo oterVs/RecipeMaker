@@ -10,11 +10,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.recipemaker.ui.activities.LogIn
 import com.example.recipemaker.ui.activities.MainActivity
 import com.example.recipemaker.R
-import com.example.recipemaker.ui.rview.adapter.FoodAdapter
 import com.example.recipemaker.databinding.FragmentProfileBinding
+import com.example.recipemaker.ui.rview.adapter.FoodAdapter
+
 import com.example.recipemaker.domain.model.Recipe
 import com.example.recipemaker.domain.model.User
 import com.example.recipemaker.ui.fragments.session.DataStoreViewModel
@@ -65,10 +67,9 @@ class ProfileFragment : Fragment() {
         initObservers()
         initListeners()
         initRecicleView()
+
         profileViewModel.userExist(dataStore.getUserName())
         profileViewModel.getFavoriteFood(FoodProvider.userLogger.recipes)
-
-
 
     }
 
@@ -126,10 +127,18 @@ class ProfileFragment : Fragment() {
     }
 
     fun initRecicleView() {
-        adapter = FoodAdapter(listFood,225){
+        adapter = FoodAdapter(listFood, 320,360){
         }
 
         binding.rvProfile.adapter = adapter
+
+        binding.rvProfile.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (!recyclerView.canScrollVertically(1)) {
+                    //do something
+                }
+            }
+        })
     }
 
     fun initListeners(){

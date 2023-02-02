@@ -1,4 +1,4 @@
-package com.example.recipemaker.ui.search
+package com.example.recipemaker.ui.fragments.search
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,8 +13,7 @@ import com.example.recipemaker.R
 import com.example.recipemaker.ui.rview.adapter.FoodAdapter
 import com.example.recipemaker.databinding.FragmentSearchBinding
 import com.example.recipemaker.domain.model.Recipe
-import com.example.recipemaker.ui.fragments.detaifood.DetailViewModel
-import com.example.recipemaker.ui.fragments.search.RecicleRecipeViewModel
+import com.example.recipemaker.ui.fragments.detailfood.DetailViewModel
 import com.example.recipemaker.utils.FoodProvider
 import com.example.recipemaker.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,7 +51,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         searchView = binding.searchView
         list = FoodProvider.food.toMutableList()
-        adapter = FoodAdapter(list,325){ recipe ->
+        adapter = FoodAdapter(list,525, 400){ recipe ->
             onItemSelected(recipe)
         }
         binding.rvFood.adapter = adapter
@@ -118,7 +117,7 @@ class SearchFragment : Fragment() {
 
         modelRecipe.easyFood.observe(viewLifecycleOwner, Observer {
             list = it.toMutableList()
-            binding.rvFood.adapter = FoodAdapter(list,325){ recipe ->
+            binding.rvFood.adapter = FoodAdapter(list,1625,400){ recipe ->
                 onItemSelected(recipe)
             }
         })

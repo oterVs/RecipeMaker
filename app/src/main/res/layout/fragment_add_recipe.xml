@@ -12,7 +12,7 @@
 
         android:id="@+id/backProfile"
         android:layout_width="50dp"
-        android:layout_height="45dp"
+        android:layout_height="35dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="15dp"
         android:src="@drawable/ic_baseline_arrow_back_24"
@@ -22,7 +22,7 @@
     </ImageView>
 
     <TextView
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/md_theme_dark_inverseOnSurface"
@@ -30,12 +30,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/backProfile"
-        app:layout_constraintHorizontal_bias="0.4">
+        app:layout_constraintHorizontal_bias="0.25">
 
     </TextView>
 
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_width="match_parent"
@@ -161,7 +162,7 @@
                 android:id="@+id/rvaIngredientes"
                 android:layout_width="match_parent"
                 android:layout_weight="0.5"
-                android:layout_height="150dp"
+                android:layout_height="200dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
@@ -169,7 +170,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvaSteps"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="200dp"
                 android:layout_weight="0.5"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">

@@ -1,4 +1,4 @@
-package com.example.recipemaker.ui.fragments.detaifood
+package com.example.recipemaker.ui.fragments.detailfood
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -13,7 +13,7 @@ class FoodHolder(inflate: View, ) : RecyclerView.ViewHolder(inflate) {
 
     private var binding = ItemFoodBinding.bind(inflate)
 
-    fun init(food: Recipe, onClickListener:(Recipe) -> Unit, widthcard: Int){
+    fun init(food: Recipe, onClickListener:(Recipe) -> Unit, widthcard: Int, heightcar: Int){
         binding.titleFood.text = food.title
 
         Picasso.get().load(food.imageUrl).into(binding.imgItemFood)
@@ -24,9 +24,16 @@ class FoodHolder(inflate: View, ) : RecyclerView.ViewHolder(inflate) {
 
         binding.card.startAnimation(AnimationUtils.loadAnimation(itemView.context, R.anim.anim_one))
 
-        val params = ViewGroup.LayoutParams(widthcard, ViewGroup.LayoutParams.MATCH_PARENT)
+        val layoutParams = binding.card.layoutParams
+        val layoutParamsi = binding.imgItemFood.layoutParams
 
-        binding.card.layoutParams = params
+        layoutParams.width = widthcard
+        layoutParams.height = heightcar
+        layoutParamsi.height = heightcar - (heightcar * 0.20).toInt()
+
+        binding.card.layoutParams = layoutParams
+
+
     }
 
 
