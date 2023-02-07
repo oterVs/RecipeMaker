@@ -57,13 +57,16 @@ class DetailFood : Fragment() {
     private fun initListeners() {
       //  activity?.toast(modelRecipe._itemSelected.)
         //binding.titelDetailFood.text = modelRecipe.itemDataSelected?.title
+       // !FoodProvider.userLogger.favorites.contains(FoodProvider.itemSelected.id)
         var like = FoodProvider.userLogger.favorites.contains(FoodProvider.itemSelected.id)
+        likeAnimation(binding.addFavorite, R.raw.hearth, !like)
+
         binding.backSearch.setOnClickListener{
             findNavController().navigate(R.id.searchFragment)
         }
         binding.addFavorite.setOnClickListener {
 
-            like = likeAnimation(binding.addFavorite, R.raw.lotie1, like)
+            like = likeAnimation(binding.addFavorite, R.raw.hearth, like)
 
             if(!FoodProvider.userLogger.favorites.contains(FoodProvider.itemSelected.id)){
                 FoodProvider.userLogger.favorites.add(FoodProvider.itemSelected.id)

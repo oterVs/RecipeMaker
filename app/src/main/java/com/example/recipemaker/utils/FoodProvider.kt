@@ -6,7 +6,10 @@ import com.example.recipemaker.domain.model.User
 class FoodProvider {
     companion object {
         var food: List<Recipe> = emptyList()
+        var foodMy: List<Recipe> = emptyList()
+        var foodFav: List<Recipe> = emptyList()
         var itemSelected: Recipe = Recipe("uno")
         var userLogger: User = User()
+
     }
 }

@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.recipemaker.R
 import com.example.recipemaker.ui.rview.adapter.FoodAdapter
 import com.example.recipemaker.databinding.FragmentSearchBinding
@@ -115,6 +116,20 @@ class SearchFragment : Fragment() {
             }
         })*/
 
+        binding.swipeRv.setOnRefreshListener {
+            //listCountries.clear()
+            //loadCountries()
+            binding.swipeRv.isRefreshing = false
+        }
+
+        binding.rvFood.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (!recyclerView.canScrollVertically(-1)) {
+                    activity?.toast("halo")
+                }
+            }
+        })
+
         modelRecipe.easyFood.observe(viewLifecycleOwner, Observer {
             list = it.toMutableList()
             binding.rvFood.adapter = FoodAdapter(list,1625,400){ recipe ->
@@ -134,6 +149,8 @@ class SearchFragment : Fragment() {
 
 
     }
+
+
 
     fun onItemSelected(food: Recipe){
         detailFood.selectedItem(food)

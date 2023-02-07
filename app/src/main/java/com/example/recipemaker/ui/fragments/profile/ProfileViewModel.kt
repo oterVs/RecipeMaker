@@ -9,6 +9,7 @@ import com.example.recipemaker.domain.model.User
 import com.example.recipemaker.domain.repository.FoodRepository
 import com.example.recipemaker.domain.repository.LoginRepository
 import com.example.recipemaker.utils.DataState
+import com.example.recipemaker.utils.FoodProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -30,6 +31,10 @@ class ProfileViewModel @Inject constructor(
     val favoriteFood: LiveData<DataState<List<Recipe>>>
         get() = _favoriteFood
 
+    private val _favoriteMine: MutableLiveData<DataState<List<Recipe>>> = MutableLiveData()
+    val favoriteMine: LiveData<DataState<List<Recipe>>>
+        get() = _favoriteMine
+
 
     fun userExist(email: String){
         viewModelScope.launch {
@@ -43,6 +48,15 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch{
             foodRepository.getFavoriteFood(list).onEach{
                 _favoriteFood.value = it
+
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    fun getFavoriteMine(list: List<String>){
+        viewModelScope.launch{
+            foodRepository.getFavoriteFood(list).onEach{
+                _favoriteMine.value = it
             }.launchIn(viewModelScope)
         }
     }

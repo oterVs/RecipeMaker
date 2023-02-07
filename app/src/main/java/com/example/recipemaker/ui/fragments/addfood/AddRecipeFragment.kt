@@ -166,9 +166,9 @@ class AddRecipeFragment : Fragment() {
             .addOnSuccessListener {
                 activity?.toast("exito")
                 val recipe = Recipe(
-                    title = binding.addName.toString(),
-                    duration = binding.addDuration.toString(),
-                    imageUrl = "images/$filename",
+                    title = binding.addName.text.toString(),
+                    duration = binding.addDuration.text.toString(),
+                    imageUrl = "https://firebasestorage.googleapis.com/v0/b/recipemaker-8e1b3.appspot.com/o/images%$filename",
                     ingredients = ingredients,
                     steps = stepsl
                 )

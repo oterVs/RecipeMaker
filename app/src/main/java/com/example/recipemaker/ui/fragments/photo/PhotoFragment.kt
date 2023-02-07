@@ -22,6 +22,7 @@ import com.example.recipemaker.ui.rview.adapter.FoodAdapter
 import com.example.recipemaker.domain.model.Recipe
 import com.example.recipemaker.ui.activities.LogIn
 import com.example.recipemaker.utils.FoodProvider
+import com.example.recipemaker.utils.toast
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.objects.ObjectDetector
 import dagger.hilt.android.AndroidEntryPoint
@@ -74,7 +75,7 @@ class PhotoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = FoodAdapter(listResult,333,333){
+        adapter = FoodAdapter(listResult,525,333){
             println("something")
         }
         binding.rvResult.adapter = adapter
@@ -193,6 +194,7 @@ class PhotoFragment : Fragment() {
         activity?.runOnUiThread {
             binding.photoDetect.setImageBitmap(imgWithResult)
         }
+
     }
 
 
@@ -202,6 +204,10 @@ class PhotoFragment : Fragment() {
             if(receta.ingredients.contains(ingredient)){
                 listResult.add(receta)
             }
+        }
+
+        if(listResult.size == 0){
+            activity?.toast("No se encontraron recetas")
         }
         adapter.setData(listResult)
 

@@ -7,7 +7,7 @@
     tools:context=".ui.fragments.profile.ProfileFragment"
     >
 
-    <!-- TODO: Update blank fragment layout -->
+
     <ImageView
         android:id="@+id/profileLogOut"
         android:layout_width="30dp"
@@ -93,23 +93,35 @@
             android:icon="@drawable/ic_baseline_favorite_border_24"
             />
 
+
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="10dp"
-        android:id="@+id/rvProfile"
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRv"
         android:layout_width="match_parent"
         android:layout_height="425dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tabsProfile"
-        app:layout_constraintVertical_bias="0"
+        android:layout_marginTop="10dp"
+        app:layout_constraintVertical_bias="0">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/rvProfile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
         android:orientation="vertical"
         app:spanCount="2"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -120,5 +132,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/pbProfile"
         android:visibility="invisible"></ProgressBar>
+
+
+    
 
 </androidx.constraintlayout.widget.ConstraintLayout>

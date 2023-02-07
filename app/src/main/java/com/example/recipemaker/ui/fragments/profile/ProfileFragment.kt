@@ -31,8 +31,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
@@ -40,7 +39,10 @@ class ProfileFragment : Fragment() {
     private lateinit var binding : FragmentProfileBinding
     private val dataStore : DataStoreViewModel by activityViewModels()
     private val profileViewModel : ProfileViewModel by viewModels()
+
     private var listFood : MutableList<Recipe> = mutableListOf(Recipe())
+    private var listFavorite : List<Recipe> = FoodProvider.foodFav
+
     lateinit var adapter: FoodAdapter
     lateinit var auth : FirebaseAuth
 
@@ -68,9 +70,20 @@ class ProfileFragment : Fragment() {
         initListeners()
         initRecicleView()
 
+        //profileViewModel.userExist(dataStore.getUserName())
         profileViewModel.userExist(dataStore.getUserName())
-        profileViewModel.getFavoriteFood(FoodProvider.userLogger.recipes)
 
+       // binding.nameProfile.text = FoodProvider.userLogger.name
+        //Picasso.get().load(FoodProvider.userLogger.photoUrl).into(binding.profileimg)
+
+        //println(FoodProvider.foodFav)
+
+
+        //adapter.setData(FoodProvider.foodFav)
+       // adapter.notifyDataSetChanged()
+
+        profileViewModel.getFavoriteFood(FoodProvider.userLogger.recipes)
+        //profileViewModel.getFavoriteMine(FoodProvider.userLogger.favorites)
     }
 
     private fun initObservers() {
@@ -93,11 +106,12 @@ class ProfileFragment : Fragment() {
                 is DataState.Success<List<Recipe>> -> {
                     // activity?.toast(it.data.email)
 
+                    FoodProvider.foodFav = it.data.toMutableList()
                     listFood = it.data.toMutableList()
-                    activity?.toast(it.data.size.toString())
                     adapter.setData(listFood)
                     adapter.notifyDataSetChanged()
                     hideProgressDialog()
+                    //hideProgressDialog()
                 }
                 is DataState.Error -> {
                     hideProgressDialog()
@@ -107,7 +121,28 @@ class ProfileFragment : Fragment() {
                     showProgressBar()
                 }
                 else -> { }
+            }
+        })
 
+        profileViewModel.favoriteMine.observe(viewLifecycleOwner, Observer {
+            when(it){
+                is DataState.Success<List<Recipe>> -> {
+                    // activity?.toast(it.data.email)
+
+                    FoodProvider.foodMy = it.data.toMutableList()
+                    listFood = it.data.toMutableList()
+                    //activity?.toast(it.data.size.toString())
+
+                    // hideProgressDialog()
+                }
+                is DataState.Error -> {
+                    //hideProgressDialog()
+                    //manageRegisterErrorMessages(it.exception)
+                }
+                is DataState.Loading ->{
+                    //showProgressBar()
+                }
+                else -> { }
             }
         })
     }
@@ -127,15 +162,27 @@ class ProfileFragment : Fragment() {
     }
 
     fun initRecicleView() {
-        adapter = FoodAdapter(listFood, 320,360){
+        adapter = FoodAdapter(FoodProvider.foodFav, 320,360){
         }
 
         binding.rvProfile.adapter = adapter
 
+
+        binding.swipeRv.setOnRefreshListener {
+            //listFood = emptyList()
+            //listFavorite = emptyList()
+            binding.swipeRv.isRefreshing = false
+        }
+
         binding.rvProfile.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (!recyclerView.canScrollVertically(1)) {
-                    //do something
+                  //  profileViewModel.getFavoriteFood(FoodProvider.userLogger.favorites)
+
+                    //profileViewModel.getFavoriteMine(FoodProvider.userLogger.recipes)
+
+                   // adapter.setData(listFood)
+                  //  adapter.notifyDataSetChanged()
                 }
             }
         })
@@ -147,11 +194,15 @@ class ProfileFragment : Fragment() {
         binding.tabsProfile.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                activity?.toast(tab?.text.toString())
+
                 if(tab?.text.toString() == "My recipes"){
                     profileViewModel.getFavoriteFood(FoodProvider.userLogger.recipes)
+                    adapter.setData(listFood)
+                    adapter.notifyDataSetChanged()
                 } else if (tab?.text.toString() == "Favorites"){
                     profileViewModel.getFavoriteFood(FoodProvider.userLogger.favorites)
+                    adapter.setData(listFavorite)
+                    adapter.notifyDataSetChanged()
                 }
             }
 

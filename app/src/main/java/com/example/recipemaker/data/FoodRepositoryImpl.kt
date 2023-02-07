@@ -23,16 +23,22 @@ class FoodRepositoryImpl @Inject constructor(
 
     override suspend fun getAllFood(): Flow<DataState<List<Recipe>>> = flow {
         emit(DataState.Loading)
-        val listFood : MutableList<Recipe> = mutableListOf(Recipe("uno"));
+        val listFood : MutableList<Recipe> = mutableListOf();
         try {
                 foodCollection.get()
                 .addOnSuccessListener { result ->
+                    var counter = 0
                     for (document in result) {
                         // Log.d(TAG, "${document.id} => ${document.data}")
+                        counter++
 
                         var recipe1 = document.toObject(Recipe::class.java)
                         //println(recipe1.id)
                         listFood.add(recipe1)
+
+                       // if(counter >= 50){
+                       //     break
+                      //  }
                     }
                 }
                 .addOnFailureListener { exception ->
@@ -51,7 +57,7 @@ class FoodRepositoryImpl @Inject constructor(
     override suspend fun getFavoriteFood(lista: List<String>): Flow<DataState<List<Recipe>>> = flow {
         emit(DataState.Loading)
         val listFavoriteFood : MutableList<Recipe> = mutableListOf<Recipe>()
-
+        //val listFood : MutableList<Recipe> = mutableListOf();
         try {
             for(id in lista){
                 foodCollection.whereEqualTo("id",id).get()
@@ -66,8 +72,9 @@ class FoodRepositoryImpl @Inject constructor(
                         println("fallo ")
                     }.await()
             }
+            FoodProvider.foodFav = listFavoriteFood
             val resul = listFavoriteFood.toList()
-            emit(DataState.Success(resul))
+            emit(DataState.Success(listFavoriteFood))
             emit(DataState.Finished)
         }catch (e: Exception) {
             println("fallo")

@@ -31,6 +31,7 @@ class SplashActivity : AppCompatActivity() {
        // like = likeAnimation(binding.lotiesplash, R.raw.food, like)
 
         binding.lotiesplash.playAnimation()
+
         //startActivity(Intent(this, MainActivity::class.java))
         //finish()
         // println(auth.currentUser?.uid ?: "No hay usuario")
