@@ -22,9 +22,11 @@ class SignUpViewModel @Inject constructor(
     val signUpState : LiveData<DataState<User>>
         get() = _signUpState
 
+
     private val _saveUserState: MutableLiveData<DataState<Boolean>> = MutableLiveData()
     val saveUserState : LiveData<DataState<Boolean>>
         get() = _saveUserState
+
 
     fun signUp(user: User, password: String){
         viewModelScope.launch {
@@ -35,6 +37,7 @@ class SignUpViewModel @Inject constructor(
             )
         }
     }
+
     fun saveUser(user: User){
         viewModelScope.launch {
             loginRepository.saveUser(user)

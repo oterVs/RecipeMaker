@@ -19,6 +19,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_fragmentLogIn_to_loginIdFragment"
+            app:destination="@id/loginIdFragment" />
 
     </fragment>
     <fragment
@@ -31,6 +34,15 @@
             app:destination="@id/fragmentLogIn"
          />
 
+    </fragment>
+    <fragment
+        android:id="@+id/loginIdFragment"
+        android:name="com.example.recipemaker.ui.fragments.loginid.LoginIdFragment"
+        android:label="fragment_login_id"
+        tools:layout="@layout/fragment_login_id" >
+        <action
+            android:id="@+id/action_loginIdFragment_to_fragmentLogIn"
+            app:destination="@id/fragmentLogIn" />
     </fragment>
 
 </navigation>

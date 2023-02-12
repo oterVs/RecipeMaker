@@ -80,6 +80,7 @@ class RegisteredFragment : Fragment() {
                 else -> Unit
             }
         })
+
         viewModel.saveUserState.observe(viewLifecycleOwner, Observer { dataState ->
             when(dataState){
                 is DataState.Success<Boolean> -> {
@@ -104,9 +105,13 @@ class RegisteredFragment : Fragment() {
                 viewModel.signUp(createUser(), binding.repPassword1.text.toString())
             }
         }
+
+
         binding.backLogin.setOnClickListener{
             activity?.onBackPressed()
         }
+
+
         binding.registeredGoogle.setOnClickListener {
             signInGoogle()
         }

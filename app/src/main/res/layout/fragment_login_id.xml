@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.login.FragmentLogIn"
+    tools:context=".ui.fragments.loginid.LoginIdFragment"
     android:windowEnterAnimation="@anim/slide_in_right"
     android:windowExitAnimation="@anim/slide_out_left">
 
@@ -79,16 +79,15 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card"
-        app:layout_constraintVertical_bias="0.317">
+        app:layout_constraintVertical_bias="0.1">
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:checked="true"
+            android:checked="false"
             android:text="Tipo LogIng"
             android:layout_gravity="right"
             android:id="@+id/changeLog"/>
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/filledTextField"
@@ -97,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:backgroundTint="@android:color/transparent"
-            android:hint="@string/log_in_email"
+            android:hint="ID"
             app:layout_constraintCircleRadius="12sp"
             app:startIconDrawable="@drawable/ic_baseline_account_circle_24">
 
@@ -110,23 +109,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password"
-            style="?attr/textInputFilledStyle"
-            android:layout_width="match_parent"
 
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:hint="@string/log_in_password"
-            app:startIconDrawable="@drawable/ic_baseline_password_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/cardview_light_background" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/buttonLogin"
@@ -142,40 +125,13 @@
 
         </Button>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15sp"
-            android:text="@string/log_in_iniciarsesion">
-
-        </TextView>
 
 
-        <Button
-            android:id="@+id/logInGoogle"
-            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:backgroundTint="@color/md_theme_light_onSecondary"
-            android:elevation="20dp"
-            android:text="@string/log_in_googletext"
-            android:textColor="@color/md_theme_dark_background"
-            app:icon="@drawable/google"
-            app:iconTint="@null">
-
-        </Button>
 
 
-        <TextView
-            android:id="@+id/registered"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/log_in_register"
-            android:textColor="@color/seed"
-            android:textStyle="bold">
 
-        </TextView>
+
+
 
     </LinearLayout>
 

@@ -145,6 +145,11 @@ class FragmentLogIn : Fragment() {
         binding.logInGoogle.setOnClickListener {
             signInGoogle()
         }
+        binding.changeLog.setOnCheckedChangeListener{ buttonView, isChecked ->
+            if(!isChecked){
+                findNavController().navigate(R.id.loginIdFragment)
+            }
+        }
     }
     private fun manageUserLogin() {
 
