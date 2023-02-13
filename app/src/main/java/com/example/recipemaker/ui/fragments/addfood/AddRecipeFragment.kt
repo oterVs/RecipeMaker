@@ -11,15 +11,13 @@ import androidx.fragment.app.viewModels
 import com.example.recipemaker.ui.rview.adapter.DetailAdapter
 import com.example.recipemaker.databinding.FragmentAddRecipeBinding
 import com.example.recipemaker.domain.model.Recipe
-import com.example.recipemaker.utils.toast
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import androidx.lifecycle.Observer
 import com.example.recipemaker.R
 import com.example.recipemaker.ui.fragments.signup.SignUpViewModel
-import com.example.recipemaker.utils.DataState
-import com.example.recipemaker.utils.FoodProvider
+import com.example.recipemaker.utils.*
 import java.util.*
 
 @AndroidEntryPoint
@@ -121,9 +119,9 @@ class AddRecipeFragment : Fragment() {
 
         binding.ingredientes.setOnEditorActionListener { v, keyCode, event ->
            // activity?.toast(KeyEvent.KEYCODE_ENTER.toString())
-            if(keyCode == 0){
+            if(event != null || keyCode == 0){
                 ingredients.add(binding.ingredientes.text.toString())
-                adaptari.notifyItemInserted(ingredients.size)
+                adaptari.notifyItemInserted(ingredients.size-1)
                 binding.ingredientes.setText("")
                 true
             } else {
@@ -133,10 +131,10 @@ class AddRecipeFragment : Fragment() {
         }
         binding.steps.setOnEditorActionListener { v, keyCode, event ->
           // activity?.toast(keyCode.toString())
-            if(keyCode == 0 ){
+            if(event != null || keyCode == 0 ){
                 stepsl.add(binding.steps.text.toString())
-                adapters.notifyItemInserted(stepsl.size)
-                binding.ingredientes.setText("")
+                adapters.notifyItemInserted(stepsl.size-1)
+                binding.steps.setText("")
                 true
             } else {
                 false
@@ -148,12 +146,16 @@ class AddRecipeFragment : Fragment() {
 
 
     private fun uploadFirebase(){
-        val formater = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
-        val now = Date()
-        val filename = formater.format(now)
-        val storageReference = FirebaseStorage.getInstance().getReference("images/$filename")
 
-        //val gsReference =  FirebaseStorage.getInstance().getReferenceFromUrl("gs://bucket/images/stars.jpg")
+
+        if(DataOk()){
+            activity?.toast("se inserto")
+            val formater = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
+            val now = Date()
+            val filename = formater.format(now)
+            val storageReference = FirebaseStorage.getInstance().getReference("images/$filename")
+
+            //val gsReference =  FirebaseStorage.getInstance().getReferenceFromUrl("gs://bucket/images/stars.jpg")
 /*
         storageReference.downloadUrl
             .addOnSuccessListener {
@@ -162,21 +164,52 @@ class AddRecipeFragment : Fragment() {
 
             }*/
 
-        storageReference.putFile(image)
-            .addOnSuccessListener {
-                activity?.toast("exito")
-                val recipe = Recipe(
-                    title = binding.addName.text.toString(),
-                    duration = binding.addDuration.text.toString(),
-                    imageUrl = "https://firebasestorage.googleapis.com/v0/b/recipemaker-8e1b3.appspot.com/o/images%$filename",
-                    ingredients = ingredients,
-                    steps = stepsl
-                )
-                id = recipe.id
-                addModel.saveRecipe(recipe)
-            }.addOnFailureListener{
-                activity?.toast("fail")
+            storageReference.putFile(image)
+                .addOnSuccessListener {
+                    activity?.toast("exito")
+                    val recipe = Recipe(
+                        title = binding.addName.text.toString(),
+                        duration = binding.addDuration.text.toString(),
+                        imageUrl = "https://firebasestorage.googleapis.com/v0/b/recipemaker-8e1b3.appspot.com/o/images%2F$filename?alt=media&token=76748857-6de5-4247-bf13-41dc3ab6f621",
+                        ingredients = ingredients,
+                        steps = stepsl
+                    )
+                    id = recipe.id
+                    addModel.saveRecipe(recipe)
+                }.addOnFailureListener{
+                    activity?.toast("fail")
+                }
+        }
+
+    }
+
+    private fun DataOk(): Boolean {
+        return when{
+            requireActivity().isInputEmpty(binding.addName, true) -> {
+                // activity?.toast(getString(R.string.login__error_enter_email))
+                activity?.snackBar("Ingrese el nombre de la receta",binding.firebase)
+                false
             }
+            requireActivity().isInputEmpty(binding.addDuration, true) -> {
+                activity?.snackBar("Ingrese la duración de la receta",binding.firebase)
+                false
+            }
+            ingredients.size == 0 -> {
+                activity?.snackBar("Ingrese al menos un ingrediente",binding.firebase)
+                false
+            }
+            stepsl.size == 0 -> {
+                activity?.snackBar("Ingrese al menos un paso",binding.firebase)
+                false
+            }
+            !::image.isInitialized -> {
+                activity?.snackBar("Seleccione una imagen",binding.firebase)
+                false
+            }
+            else ->{
+                true // El usuario mete todos los datos
+            }
+        }
     }
 
     private fun uploadImg() {

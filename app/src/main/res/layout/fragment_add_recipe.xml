@@ -55,7 +55,8 @@
             android:id="@+id/imgAdd"
             android:layout_width="155dp"
             android:layout_height="155dp"
-
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
             android:src="@drawable/ic_baseline_add_photo_alternate_24">
 
         </ImageView>
@@ -234,17 +235,21 @@
 
     </LinearLayout>
 
-    <Button
+    <ImageButton
+        app:shapeAppearanceOverlay="@style/ImageButtonMine"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:backgroundTint="@color/md_theme_dark_inverseOnSurface"
         android:id="@+id/firebase"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="Guardar"
-        android:layout_marginBottom="100dp"
-        app:icon="@drawable/ic_baseline_add_24"></Button>
+        android:src="@drawable/ic_baseline_add_24"
+     >
+
+    </ImageButton>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

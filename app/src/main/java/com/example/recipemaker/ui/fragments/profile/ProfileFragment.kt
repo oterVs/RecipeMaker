@@ -23,6 +23,7 @@ import com.example.recipemaker.ui.fragments.session.DataStoreViewModel
 import com.example.recipemaker.utils.Constants.USER_NOT_LOGGED
 import com.example.recipemaker.utils.DataState
 import com.example.recipemaker.utils.FoodProvider
+import com.example.recipemaker.utils.snackBar
 import com.example.recipemaker.utils.toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -40,7 +41,7 @@ class ProfileFragment : Fragment() {
     private val dataStore : DataStoreViewModel by activityViewModels()
     private val profileViewModel : ProfileViewModel by viewModels()
 
-    private var listFood : MutableList<Recipe> = mutableListOf(Recipe())
+    private var listFood : MutableList<Recipe> = mutableListOf()
     private var listFavorite : List<Recipe> = FoodProvider.foodFav
 
     lateinit var adapter: FoodAdapter
@@ -70,11 +71,14 @@ class ProfileFragment : Fragment() {
         initListeners()
         initRecicleView()
 
+        //adapter.notifyDataSetChanged()
         //profileViewModel.userExist(dataStore.getUserName())
-        profileViewModel.userExist(dataStore.getUserName())
+        println(dataStore.getUserName())
+        //profileViewModel.userExist(dataStore.getUserName())
 
-       // binding.nameProfile.text = FoodProvider.userLogger.name
-        //Picasso.get().load(FoodProvider.userLogger.photoUrl).into(binding.profileimg)
+
+        binding.nameProfile.text = FoodProvider.userLogger.name
+        Picasso.get().load(FoodProvider.userLogger.photoUrl).into(binding.profileimg)
 
         //println(FoodProvider.foodFav)
 
@@ -82,7 +86,9 @@ class ProfileFragment : Fragment() {
         //adapter.setData(FoodProvider.foodFav)
        // adapter.notifyDataSetChanged()
 
+
         profileViewModel.getFavoriteFood(FoodProvider.userLogger.recipes)
+        manageVisibility()
         //profileViewModel.getFavoriteMine(FoodProvider.userLogger.favorites)
     }
 
@@ -111,6 +117,7 @@ class ProfileFragment : Fragment() {
                     adapter.setData(listFood)
                     adapter.notifyDataSetChanged()
                     hideProgressDialog()
+                    manageVisibility()
                     //hideProgressDialog()
                 }
                 is DataState.Error -> {
@@ -129,8 +136,9 @@ class ProfileFragment : Fragment() {
                 is DataState.Success<List<Recipe>> -> {
                     // activity?.toast(it.data.email)
 
-                    FoodProvider.foodMy = it.data.toMutableList()
+                    //FoodProvider.foodMy = it.data.toMutableList()
                     listFood = it.data.toMutableList()
+                    manageVisibility()
                     //activity?.toast(it.data.size.toString())
 
                     // hideProgressDialog()
@@ -145,6 +153,17 @@ class ProfileFragment : Fragment() {
                 else -> { }
             }
         })
+    }
+
+    private fun manageVisibility(){
+        if(listFood.size == 0){
+            //activity?.snackBar("No has añadido nuevas recetas",binding.rvResult)
+            binding.rvProfile.visibility = View.INVISIBLE
+            binding.messageInfo.visibility = View.VISIBLE
+        } else {
+            binding.rvProfile.visibility = View.VISIBLE
+            binding.messageInfo.visibility = View.INVISIBLE
+        }
     }
 
     private fun manageRegisterErrorMessages(exception: Exception) {
@@ -199,9 +218,10 @@ class ProfileFragment : Fragment() {
                     profileViewModel.getFavoriteFood(FoodProvider.userLogger.recipes)
                     adapter.setData(listFood)
                     adapter.notifyDataSetChanged()
+
                 } else if (tab?.text.toString() == "Favorites"){
                     profileViewModel.getFavoriteFood(FoodProvider.userLogger.favorites)
-                    adapter.setData(listFavorite)
+                    adapter.setData(listFood)
                     adapter.notifyDataSetChanged()
                 }
             }

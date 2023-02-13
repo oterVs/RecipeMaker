@@ -134,6 +134,35 @@
         android:visibility="invisible"></ProgressBar>
 
 
+    <LinearLayout
+        android:id="@+id/messageInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_outline_info_24">
+
+        </ImageView>
+        <TextView
+            android:textStyle="italic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No has añadido nuevas recetas">
+
+        </TextView>
+
+    </LinearLayout>
+
+
     
 
 </androidx.constraintlayout.widget.ConstraintLayout>

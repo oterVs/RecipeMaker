@@ -22,6 +22,7 @@ import com.example.recipemaker.ui.rview.adapter.FoodAdapter
 import com.example.recipemaker.domain.model.Recipe
 import com.example.recipemaker.ui.activities.LogIn
 import com.example.recipemaker.utils.FoodProvider
+import com.example.recipemaker.utils.snackBar
 import com.example.recipemaker.utils.toast
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.objects.ObjectDetector
@@ -86,15 +87,21 @@ class PhotoFragment : Fragment() {
     private fun initListeners(){
         binding.photoDetect.setOnClickListener{
             uploadImg()
-        }
-        binding.findRecipe.setOnClickListener{
-            imageFromPath(activity as LogIn, imageu)
 
         }
+       // manageVisibility()
     }
 
-
-
+    private fun manageVisibility(){
+        if(listResult.size == 0){
+            activity?.snackBar("No se encontraron recetas",binding.rvResult)
+            binding.rvResult.visibility = View.INVISIBLE
+            binding.messageInfo.visibility = View.VISIBLE
+        } else {
+            binding.rvResult.visibility = View.VISIBLE
+            binding.messageInfo.visibility = View.INVISIBLE
+        }
+    }
 
 
     private fun imageFromPath(context: Context, uri: Uri) {
@@ -199,6 +206,7 @@ class PhotoFragment : Fragment() {
 
 
     private fun filtrarFood(ingredient: String){
+
         listResult = mutableListOf()
         for(receta in FoodProvider.food){
             if(receta.ingredients.contains(ingredient)){
@@ -206,12 +214,10 @@ class PhotoFragment : Fragment() {
             }
         }
 
-        if(listResult.size == 0){
-            activity?.toast("No se encontraron recetas")
-        }
+        manageVisibility()
         adapter.setData(listResult)
-
         adapter.notifyDataSetChanged()
+
     }
 
     private fun debugPrint(results : List<Detection>) {

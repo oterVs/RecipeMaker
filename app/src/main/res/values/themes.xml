@@ -37,6 +37,22 @@
         <item name="cornerSizeBottomLeft">125dp</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.MaterialCardView.Cut2" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">100dp</item>
+        <item name="cornerSizeBottomLeft">100dp</item>
+    </style>
+
+    <style name="ImageButtonMine" parent="">
+
+        <item name="cornerRadius">10dp</item>
+
+    </style>
+
+
+
     <style name="Theme.SplashThem" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/window_back_ground</item>
 

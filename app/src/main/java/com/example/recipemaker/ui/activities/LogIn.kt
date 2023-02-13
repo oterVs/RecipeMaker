@@ -69,7 +69,7 @@ class LogIn : AppCompatActivity() {
         foodeModel.onCreate()
 
 
-       // profileViewModel.userExist(dataStore.getUserName())
+        profileViewModel.userExist(dataStore.getUserName())
 
         //profileViewModel.getFavoriteFood(FoodProvider.userLogger.favorites)
 

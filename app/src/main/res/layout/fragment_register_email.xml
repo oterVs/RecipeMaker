@@ -32,12 +32,7 @@
 
     </TextView>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRv"
-        android:layout_width="match_parent"
-        android:layout_height="460dp">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,6 +45,14 @@
         android:gravity="center"
         android:paddingStart="30sp"
         android:paddingEnd="30sp">
+
+        <ImageButton
+
+            android:src="@drawable/ic_baseline_add_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageButton>
 
         <ImageView
             android:layout_width="140dp"

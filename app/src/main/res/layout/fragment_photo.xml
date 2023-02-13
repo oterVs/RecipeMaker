@@ -4,29 +4,61 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.photo.PhotoFragment"
-    android:layout_margin="16dp">
+   >
 
 
-    <ImageView
-        android:id="@+id/photoDetect"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+
+    <com.google.android.material.card.MaterialCardView
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_baseline_add_photo_alternate_24">
+        android:id="@+id/cardDetect"
+        android:layout_width="match_parent"
+        android:layout_height="275dp"
+        android:backgroundTint="@color/seed"
+        style="?attr/materialCardViewFilledStyle"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialCardView.Cut2"
+        android:elevation="10dp"
+        app:cardElevation="30dp"
 
-    </ImageView>
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/findRecipe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="buscar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+            <androidx.cardview.widget.CardView
+                android:layout_width="215dp"
+                android:layout_height="215dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
 
-    </Button>
+                app:cardCornerRadius="150dp"
+                android:id="@+id/profileCardImg">
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
+                    android:layout_gravity="center"
+                    android:id="@+id/photoDetect"
+                    
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_baseline_add_photo_alternate_24">
+
+                </ImageView>
+            </androidx.cardview.widget.CardView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -39,10 +71,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photoDetect"
-        app:layout_constraintVertical_bias="0.447">
+        app:layout_constraintTop_toBottomOf="@+id/cardDetect"
+        app:layout_constraintVertical_bias="0.447"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:visibility="invisible">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+
+    <LinearLayout
+        android:id="@+id/messageInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_outline_info_24">
+
+        </ImageView>
+        <TextView
+            android:textStyle="italic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingresa una nueva foto">
+
+        </TextView>
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"

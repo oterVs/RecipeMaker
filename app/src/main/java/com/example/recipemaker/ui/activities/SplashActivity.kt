@@ -6,11 +6,16 @@ import android.os.Handler
 import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.airbnb.lottie.LottieAnimationView
 import com.example.recipemaker.R
 import com.example.recipemaker.databinding.ActivitySplashBinding
+import com.example.recipemaker.domain.model.User
+import com.example.recipemaker.ui.fragments.profile.ProfileViewModel
 
 import com.example.recipemaker.ui.fragments.session.DataStoreViewModel
+import com.example.recipemaker.utils.DataState
+import com.example.recipemaker.utils.FoodProvider
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,6 +26,7 @@ class SplashActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySplashBinding
     private val viewModel : DataStoreViewModel by viewModels()
+    private val profileViewModel : ProfileViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +37,9 @@ class SplashActivity : AppCompatActivity() {
        // like = likeAnimation(binding.lotiesplash, R.raw.food, like)
 
         binding.lotiesplash.playAnimation()
+        observers()
+
+
 
         //startActivity(Intent(this, MainActivity::class.java))
         //finish()
@@ -41,6 +50,7 @@ class SplashActivity : AppCompatActivity() {
         Handler().postDelayed( { //Aqui colocas la transición a otro activity
             println(viewModel.getStoreIsLogIn().toString())
             if (viewModel.getStoreIsLogIn()){
+               // profileViewModel.userExist(viewModel.getUserName())
                 startActivity(Intent(this@SplashActivity, LogIn::class.java))
                 finish()
             } else {
@@ -59,6 +69,25 @@ class SplashActivity : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         // menu.add("Save");
         return true
+    }
+
+    private fun observers(){
+        profileViewModel.userExistD.observe(this, Observer{
+            when(it){
+                is DataState.Success<User> -> {
+                    // activity?.toast(it.data.email)
+                    // activity?.toast(dataStore.getStoreIsLogIn().toString())
+
+                    FoodProvider.userLogger = it.data
+                    // println(FoodProvider.userLogger.name)
+                    // println(FoodProvider.userLogger.favorites)
+                    //binding.nameProfile.text = it.data.name
+                    //Picasso.get().load(it.data.photoUrl).into(binding.profileimg)
+
+                }
+                else -> Unit
+            }
+        })
     }
 
     private fun likeAnimation(imageView: LottieAnimationView, animation: Int, like: Boolean): Boolean {
