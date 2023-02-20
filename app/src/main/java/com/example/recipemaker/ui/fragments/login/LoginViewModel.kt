@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.viewModelScope
 import com.example.recipemaker.domain.model.User
+import com.example.recipemaker.domain.model.UserApiItem
 import com.example.recipemaker.domain.model.UserResponse
 import com.example.recipemaker.domain.repository.LoginRepository
 import com.example.recipemaker.domain.repository.UserApiRepository
@@ -42,6 +43,18 @@ class LoginViewModel @Inject constructor(
     val usersapi : LiveData<DataState<UserResponse>>
         get() = _usersapi
 
+
+    private val _usera : MutableLiveData<DataState<UserApiItem>> = MutableLiveData()
+    val usera : LiveData<DataState<UserApiItem>>
+        get() = _usera
+
+    fun getUser(id: String){
+        viewModelScope.launch {
+            userApiRepository.getUser(id).onEach { dataState ->
+                _usera.value = dataState
+            }.launchIn(viewModelScope)
+        }
+    }
 
     fun getUsers(){
         viewModelScope.launch {

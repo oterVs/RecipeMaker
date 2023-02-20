@@ -27,7 +27,7 @@ class LoginIdFragment : Fragment() {
 
     private lateinit var binding : FragmentLoginIdBinding
 
-    private var usuariosApi : MutableList<UserApiItem> = mutableListOf()
+
 
     private val viewModel : LoginViewModel by viewModels()
     private val dataStore : DataStoreViewModel by viewModels()
@@ -50,20 +50,35 @@ class LoginIdFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getUsers()
+
         initListeners()
         initObservers()
     }
 
     private fun initObservers(){
-        viewModel.usersapi.observe(viewLifecycleOwner, Observer { dataState ->
+
+        viewModel.usera.observe(viewLifecycleOwner, Observer { dataState ->
             when(dataState){
-                is DataState.Success<UserResponse> -> {
-                    usuariosApi = dataState.data
+                is DataState.Success<UserApiItem> -> {
+                    if(dataState.data.status == "active"){
+                        dataStore.storeEmail("purnima_khatri_ms@blick.co")
+                        viewModel.login("purnima_khatri_ms@blick.co", "1234567")
+                    } else {
+                        activity?.snackBar("Usuario inactivo",binding.buttonLogin)
+                        hideProgressDialog()
+                    }
                 }
-                else -> Unit
+                is DataState.Error -> {
+                    activity?.snackBar("Usario no encontrado",binding.buttonLogin)
+                    hideProgressDialog()
+                }
+                is DataState.Loading ->{
+                    showProgressBar()
+                }
+                else -> {}
             }
         })
+
         viewModel.loginState.observe(viewLifecycleOwner, Observer { dataState ->
             when(dataState){
                 is DataState.Success<Boolean> -> {
@@ -72,9 +87,6 @@ class LoginIdFragment : Fragment() {
                 is DataState.Error -> {
                     hideProgressDialog()
                     manageLoginErrorMessages(dataState.exception)
-                }
-                is DataState.Loading ->{
-                    showProgressBar()
                 }
                 else -> Unit
             }
@@ -93,9 +105,7 @@ class LoginIdFragment : Fragment() {
                     hideProgressDialog()
                     manageLoginErrorMessages(dataState.exception)
                 }
-                is DataState.Loading ->{
-                    showProgressBar()
-                }
+
                 else -> Unit
             }
         })
@@ -106,7 +116,6 @@ class LoginIdFragment : Fragment() {
                     // activity?.toast(it.data.email)
 
                     FoodProvider.userLogger = it.data
-
 
                 }
                 else -> Unit
@@ -130,29 +139,10 @@ class LoginIdFragment : Fragment() {
            // showProgressBar()
 
             var id = binding.etUser.text.toString().trim()
-            var email = ""
-            var password = ""
 
-            var isactive = false
+            println("starting......")
 
-
-            for(user in usuariosApi){
-                println("User: ${user.id} Status:${user.status}")
-                if(user.id.toString() == id && user.status == "active"){
-                    email = user.email
-                    password = "1234567"
-                    isactive = true
-                    dataStore.storeEmail(user.email)
-                    break;
-                }
-            }
-
-            if(isactive){
-                viewModel.login(email, password)
-                //activity?.toast("Se inicia sesión")
-            } else {
-                activity?.toast("Usuario inactivo")
-            }
+            viewModel.getUser(id)
 
 
         }
