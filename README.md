@@ -1,5 +1,5 @@
 # RecipeMaker
-  ![splash](https://photos.app.goo.gl/TfYtZ2mcJQNzD3Ji8)
+  ![splash](https://lh3.googleusercontent.com/pw/AMWts8CZZ1VcDtEdSo3cVl6E8pOIVZfqh7J7DUZm1A0tnyQ4SErAaXCJhHx94s9EGNT54twXBV6uMS-RyFlA4bKTLkESeOXZ5goI6NFZcvaTq_kJ2ylTkBizxm9JzjnJEgPzVbHVYFQ6mCZMaDtJFHuc6r4R=w720-h535-s-no?authuser=0)
 ## Definición del Proyecto
 Recipe maker es una aplicación movil, que busca facilitar la búsqueda de recetas por parte de los usuarios. Mediante el uso de un modelo de detección de objetos, se necesitara únicamente de una foto con los ingredientes que se desea hacer una receta, la aplicación detectará dichos alimentos y buscará recetas que concuerden
 ## Características del proyecto 
