@@ -42,7 +42,7 @@ class ProfileFragment : Fragment() {
     private val profileViewModel : ProfileViewModel by viewModels()
 
     private var listFood : MutableList<Recipe> = mutableListOf()
-    private var listFavorite : List<Recipe> = FoodProvider.foodFav
+
 
     lateinit var adapter: FoodAdapter
     lateinit var auth : FirebaseAuth
@@ -112,7 +112,7 @@ class ProfileFragment : Fragment() {
                 is DataState.Success<List<Recipe>> -> {
                     // activity?.toast(it.data.email)
 
-                    FoodProvider.foodFav = it.data.toMutableList()
+
                     listFood = it.data.toMutableList()
                     adapter.setData(listFood)
                     adapter.notifyDataSetChanged()
@@ -181,7 +181,7 @@ class ProfileFragment : Fragment() {
     }
 
     fun initRecicleView() {
-        adapter = FoodAdapter(FoodProvider.foodFav, 320,360){
+        adapter = FoodAdapter(listFood, 320,360){
         }
 
         binding.rvProfile.adapter = adapter

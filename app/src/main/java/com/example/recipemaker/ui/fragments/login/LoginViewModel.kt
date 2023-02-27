@@ -1,24 +1,19 @@
 package com.example.recipemaker.ui.fragments.login
 
-import android.database.DataSetObservable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.viewModelScope
-import com.example.recipemaker.domain.model.User
 import com.example.recipemaker.domain.model.UserApiItem
 import com.example.recipemaker.domain.model.UserResponse
-import com.example.recipemaker.domain.repository.LoginRepository
-import com.example.recipemaker.domain.repository.UserApiRepository
+import com.example.recipemaker.domain.interfaces.LoginRepository
+import com.example.recipemaker.domain.interfaces.UserApiRepository
 import com.example.recipemaker.utils.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.log
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(

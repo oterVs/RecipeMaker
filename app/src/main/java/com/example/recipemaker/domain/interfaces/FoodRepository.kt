@@ -1,5 +1,4 @@
-package com.example.recipemaker.domain.repository
-import android.provider.ContactsContract.Data
+package com.example.recipemaker.domain.interfaces
 import com.example.recipemaker.domain.model.Recipe
 import com.example.recipemaker.utils.DataState
 import kotlinx.coroutines.flow.Flow

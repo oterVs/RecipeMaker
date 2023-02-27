@@ -1,7 +1,7 @@
 package com.example.recipemaker.di
 
-import com.example.recipemaker.data.LoginRepositoryImpl
-import com.example.recipemaker.domain.repository.LoginRepository
+import com.example.recipemaker.data.remote.LoginRepositoryImpl
+import com.example.recipemaker.domain.interfaces.LoginRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import dagger.Module

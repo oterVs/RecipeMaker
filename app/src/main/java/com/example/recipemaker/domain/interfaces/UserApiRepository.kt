@@ -1,6 +1,5 @@
-package com.example.recipemaker.domain.repository
+package com.example.recipemaker.domain.interfaces
 
-import com.example.recipemaker.domain.model.User
 import com.example.recipemaker.domain.model.UserApiItem
 import com.example.recipemaker.domain.model.UserResponse
 import com.example.recipemaker.utils.DataState

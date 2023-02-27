@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipemaker.domain.model.User
-import com.example.recipemaker.domain.repository.LoginRepository
+import com.example.recipemaker.domain.interfaces.LoginRepository
 import com.example.recipemaker.utils.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn

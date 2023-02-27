@@ -1,4 +1,4 @@
-package com.example.recipemaker
+package com.example.recipemaker.ui.fragments.detailfood
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,10 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.airbnb.lottie.LottieAnimationView
+import com.example.recipemaker.R
 import com.example.recipemaker.ui.rview.adapter.DetailAdapter
 import com.example.recipemaker.databinding.FragmentDetailFoodBinding
 import com.example.recipemaker.ui.activities.LogIn
-import com.example.recipemaker.ui.fragments.detailfood.DetailViewModel
 import com.example.recipemaker.ui.fragments.signup.SignUpViewModel
 import com.example.recipemaker.utils.FoodProvider
 import com.squareup.picasso.Picasso

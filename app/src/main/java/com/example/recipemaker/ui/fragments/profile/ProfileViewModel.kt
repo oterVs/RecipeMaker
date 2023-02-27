@@ -6,10 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipemaker.domain.model.Recipe
 import com.example.recipemaker.domain.model.User
-import com.example.recipemaker.domain.repository.FoodRepository
-import com.example.recipemaker.domain.repository.LoginRepository
+import com.example.recipemaker.domain.interfaces.FoodRepository
+import com.example.recipemaker.domain.interfaces.LoginRepository
 import com.example.recipemaker.utils.DataState
-import com.example.recipemaker.utils.FoodProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
