@@ -20,7 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.recipemaker.ObjectDetectionHelper
+
 import com.example.recipemaker.R
 import com.example.recipemaker.databinding.FragmentPhotoBinding
 import com.example.recipemaker.ui.rview.adapter.FoodAdapter
@@ -55,7 +55,7 @@ class PhotoFragment : Fragment() {
 
 
     private var imageAnalyzer: ImageAnalysis? = null
-    private lateinit var objectDetectorHelper: ObjectDetectionHelper
+
     private lateinit var bitmapBuffer: Bitmap
 
     lateinit var binding : FragmentPhotoBinding
@@ -189,7 +189,7 @@ class PhotoFragment : Fragment() {
 
         val imageRotation = image.imageInfo.rotationDegrees
         // Pass Bitmap and rotation to the object detector helper for processing and detection
-        objectDetectorHelper.detect(bitmapBuffer, imageRotation)
+
     }
 
 
