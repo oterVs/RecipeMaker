@@ -4,7 +4,6 @@ import android.speech.RecognizerIntent
 import androidx.lifecycle.*
 import com.example.recipemaker.domain.model.Recipe
 import com.example.recipemaker.domain.usecases.GetAllFoodUseCase
-import com.example.recipemaker.domain.usecases.GetEasyFoodUseCase
 import com.example.recipemaker.utils.DataState
 import com.example.recipemaker.utils.FoodProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,8 +19,6 @@ class RecicleRecipeViewModel @Inject constructor(
 
 ) : ViewModel() {
 
-
-    val getEasyFoodUseCase = GetEasyFoodUseCase()
 
 
     val _itemSelected = MutableLiveData<Recipe>()
@@ -53,9 +50,6 @@ class RecicleRecipeViewModel @Inject constructor(
         }
     }
 
-    fun getEasyFood(){
-        _easyFood.value = getEasyFoodUseCase()
-    }
 
     fun setItemSelection(item: Recipe) {
         //_itemSelected.value = item

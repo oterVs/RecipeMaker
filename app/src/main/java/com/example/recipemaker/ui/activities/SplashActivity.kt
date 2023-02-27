@@ -34,21 +34,17 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         var like = true
-       // like = likeAnimation(binding.lotiesplash, R.raw.food, like)
 
+        //se inicia la animación
         binding.lotiesplash.playAnimation()
+
         observers()
 
+        //deley del splash
+        Handler().postDelayed( {
 
 
-        //startActivity(Intent(this, MainActivity::class.java))
-        //finish()
-        // println(auth.currentUser?.uid ?: "No hay usuario")
-        //initObservers()
-        //viewModel.storeIsLogIn(false)
-
-        Handler().postDelayed( { //Aqui colocas la transición a otro activity
-            println(viewModel.getStoreIsLogIn().toString())
+            //si ya se logeo vamos a su perfil caso contrario al login
             if (viewModel.getStoreIsLogIn()){
                // profileViewModel.userExist(viewModel.getUserName())
                 startActivity(Intent(this@SplashActivity, LogIn::class.java))
@@ -75,14 +71,8 @@ class SplashActivity : AppCompatActivity() {
         profileViewModel.userExistD.observe(this, Observer{
             when(it){
                 is DataState.Success<User> -> {
-                    // activity?.toast(it.data.email)
-                    // activity?.toast(dataStore.getStoreIsLogIn().toString())
 
                     FoodProvider.userLogger = it.data
-                    // println(FoodProvider.userLogger.name)
-                    // println(FoodProvider.userLogger.favorites)
-                    //binding.nameProfile.text = it.data.name
-                    //Picasso.get().load(it.data.photoUrl).into(binding.profileimg)
 
                 }
                 else -> Unit

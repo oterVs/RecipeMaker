@@ -1,7 +1,7 @@
 package com.example.recipemaker.ui.fragments.session
 
 import androidx.lifecycle.ViewModel
-import com.example.recipemaker.domain.repository.DataStoreRepository
+import com.example.recipemaker.domain.interfaces.DataStoreRepository
 import com.example.recipemaker.utils.Constants.IS_SIGN_IN
 
 import com.example.recipemaker.utils.Constants.USER_EMAIL

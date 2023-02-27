@@ -1,4 +1,4 @@
-package com.example.recipemaker.domain.repository
+package com.example.recipemaker.domain.interfaces
 
 interface DataStoreRepository {
 

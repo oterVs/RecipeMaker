@@ -1,9 +1,8 @@
-package com.example.recipemaker.data
+package com.example.recipemaker.data.remote
 
-import android.provider.ContactsContract.Data
 import com.example.recipemaker.di.FirebaseModule
 import com.example.recipemaker.domain.model.User
-import com.example.recipemaker.domain.repository.LoginRepository
+import com.example.recipemaker.domain.interfaces.LoginRepository
 import com.example.recipemaker.utils.Constants.INFO_NOT_SET
 import com.example.recipemaker.utils.Constants.USER_LOGGED_IN_ID
 import com.example.recipemaker.utils.DataState
@@ -20,6 +19,8 @@ class LoginRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
     @FirebaseModule.UsersCollection private val usersCollection: CollectionReference
 ): LoginRepository {
+
+    //authenticacion con correo y contraseña
     override suspend fun login(email: String, password: String): Flow<DataState<Boolean>> = flow {
         emit(DataState.Loading)
         try {
@@ -36,6 +37,7 @@ class LoginRepositoryImpl @Inject constructor(
         }
     }
 
+    //crea un usuario con el correo y la contraseña
     override suspend fun signUp(user: User, password: String): Flow<DataState<User>> = flow {
         emit(DataState.Loading)
         try {
@@ -70,6 +72,7 @@ class LoginRepositoryImpl @Inject constructor(
         }
     }
 
+    //deslogea al usuario athenticado
     override suspend fun logOut(): Flow<DataState<Boolean>> = flow  {
         emit(DataState.Loading)
 
@@ -83,7 +86,7 @@ class LoginRepositoryImpl @Inject constructor(
             emit(DataState.Finished)
         }
     }
-
+    //verifica si un usuario esta en la base de datos
     override suspend fun getUserData(): Flow<DataState<Boolean>> = flow {
         var requestStatus = false
         val currentUser = auth.currentUser
@@ -113,7 +116,7 @@ class LoginRepositoryImpl @Inject constructor(
             emit(DataState.Finished)
         }
     }
-
+    //guarda un uusario en la base de datos
     override suspend fun saveUser(user: User): Flow<DataState<Boolean>> = flow {
         emit(DataState.Loading)
         println(user)
@@ -132,7 +135,7 @@ class LoginRepositoryImpl @Inject constructor(
             emit(DataState.Finished)
         }
     }
-
+    // obtiene los datos de un usuario de la base de datos
     override suspend fun getUser(mail: String): Flow<DataState<User>> = flow {
         emit(DataState.Loading)
         try {

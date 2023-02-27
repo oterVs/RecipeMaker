@@ -1,14 +1,11 @@
-package com.example.recipemaker.data
+package com.example.recipemaker.data.remote
 
-import android.content.ContentValues
-import android.util.Log
 import com.example.recipemaker.di.FirebaseModule
 import com.example.recipemaker.domain.model.Recipe
-import com.example.recipemaker.domain.repository.FoodRepository
+import com.example.recipemaker.domain.interfaces.FoodRepository
 import com.example.recipemaker.utils.DataState
 import com.example.recipemaker.utils.FoodProvider
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,7 +17,7 @@ class FoodRepositoryImpl @Inject constructor(
 ) : FoodRepository {
 
 
-
+    //Nos obtiene todas las recetas en la base de datos
     override suspend fun getAllFood(): Flow<DataState<List<Recipe>>> = flow {
         emit(DataState.Loading)
         val listFood : MutableList<Recipe> = mutableListOf();
@@ -51,7 +48,7 @@ class FoodRepositoryImpl @Inject constructor(
             emit(DataState.Finished)
         }
     }
-
+    //Se le pasa una lista de ids de recetas, y devuelva dichas recetas de la base de datos
     override suspend fun getFavoriteFood(lista: List<String>): Flow<DataState<List<Recipe>>> = flow {
         emit(DataState.Loading)
         val listFavoriteFood : MutableList<Recipe> = mutableListOf<Recipe>()
@@ -70,8 +67,8 @@ class FoodRepositoryImpl @Inject constructor(
                         println("fallo ")
                     }.await()
             }
-            FoodProvider.foodFav = listFavoriteFood
-            val resul = listFavoriteFood.toList()
+
+
             emit(DataState.Success(listFavoriteFood))
             emit(DataState.Finished)
         }catch (e: Exception) {
@@ -80,13 +77,8 @@ class FoodRepositoryImpl @Inject constructor(
             emit(DataState.Finished)
         }
 
-
-
-
-
-
     }
-
+    //guarda una receta
     override suspend fun saveFood(food: Recipe): Flow<DataState<Boolean>> = flow {
         emit(DataState.Loading)
         println(food)

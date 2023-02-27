@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFood"
-        android:name="com.example.recipemaker.DetailFood"
+        android:name="com.example.recipemaker.ui.fragments.detailfood.DetailFood"
         android:label="fragment_detail_food"
         tools:layout="@layout/fragment_detail_food" >
         <action

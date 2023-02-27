@@ -2,9 +2,6 @@ package com.example.recipemaker.domain.model
 
 import java.util.UUID
 
-data class RecipeResponse (val lista: List<Recipe>) {
-}
-
 
 data class Recipe(
 

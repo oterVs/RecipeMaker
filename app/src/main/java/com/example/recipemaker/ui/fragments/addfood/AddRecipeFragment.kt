@@ -43,7 +43,7 @@ class AddRecipeFragment : Fragment() {
 
     private val addModel : AddViewModel by viewModels()
     private val signupView : SignUpViewModel by viewModels()
-    private val foodViewModel : RecicleRecipeViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,20 +54,21 @@ class AddRecipeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         binding = FragmentAddRecipeBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
+        initrv()
         initListeners()
         initObservers()
 
     }
 
     private fun initObservers() {
+        //Observer para guardar la receta
         addModel.saveFoodState.observe(viewLifecycleOwner, Observer { dataState ->
             when(dataState){
                 is DataState.Success<Boolean> -> {
@@ -84,6 +85,7 @@ class AddRecipeFragment : Fragment() {
                 else -> Unit
             }
         })
+        //actualizamos las recetas del usuario, con la recientemente añadida
         signupView.saveUserState.observe(viewLifecycleOwner, Observer { dataState ->
             when(dataState){
                 is DataState.Success<Boolean> -> {
@@ -104,7 +106,7 @@ class AddRecipeFragment : Fragment() {
         })
     }
 
-    private fun init() {
+    private fun initrv() {
         adapters = DetailAdapter(stepsl){
             stepsl.removeAt(it)
             adapters.notifyItemRemoved(it)
@@ -119,9 +121,9 @@ class AddRecipeFragment : Fragment() {
 
     private fun initListeners() {
 
+        //cargamos una imagen de la galeria a la receta que estamos incertando
         binding.imgAdd.setOnClickListener{
-
-
+            //verificar permiso
             if (ContextCompat.checkSelfPermission(activity as LogIn, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
                 // Permission is not granted
@@ -136,15 +138,17 @@ class AddRecipeFragment : Fragment() {
                 uploadImg()
             }
         }
-
+        //subimos la receta a firebase
         binding.firebase.setOnClickListener{
             uploadFirebase()
         }
 
+        //regresamos al perfil
         binding.backProfile.setOnClickListener {
             activity?.onBackPressed()
         }
 
+        //escuchamos el teclado del celular cada vez que presione enter, se añade un item a la lista de ingredientes
         binding.ingredientes.setOnEditorActionListener { v, keyCode, event ->
            // activity?.toast(KeyEvent.KEYCODE_ENTER.toString())
             if(event != null || keyCode == 0){
@@ -157,6 +161,7 @@ class AddRecipeFragment : Fragment() {
             }
 
         }
+        //escuchamos el teclado del celular cada vez que presione enter, se añade un item a la lista de pasos
         binding.steps.setOnEditorActionListener { v, keyCode, event ->
           // activity?.toast(keyCode.toString())
             if(event != null || keyCode == 0 ){
@@ -172,9 +177,8 @@ class AddRecipeFragment : Fragment() {
 
     }
 
-
+    //guardar receta
     private fun uploadFirebase(){
-
 
         if(DataOk()){
 
@@ -182,15 +186,6 @@ class AddRecipeFragment : Fragment() {
             val now = Date()
             val filename = formater.format(now)
             val storageReference = FirebaseStorage.getInstance().getReference("images/$filename")
-
-            //val gsReference =  FirebaseStorage.getInstance().getReferenceFromUrl("gs://bucket/images/stars.jpg")
-/*
-        storageReference.downloadUrl
-            .addOnSuccessListener {
-
-            }.addOnFailureListener{
-
-            }*/
 
             storageReference.putFile(image)
                 .addOnSuccessListener {
@@ -211,6 +206,7 @@ class AddRecipeFragment : Fragment() {
 
     }
 
+    //validamos los datos de la receta
     private fun DataOk(): Boolean {
         return when{
             requireActivity().isInputEmpty(binding.addName, true) -> {
@@ -240,13 +236,13 @@ class AddRecipeFragment : Fragment() {
         }
     }
 
+    //load a image from de gallery
     private fun uploadImg() {
         var intent = Intent()
         intent.action = Intent.ACTION_GET_CONTENT
         intent.type = "image/*"
         startActivityForResult(intent,1)
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 1) {
@@ -254,6 +250,9 @@ class AddRecipeFragment : Fragment() {
             binding.imgAdd.setImageURI(image)
         }
     }
+
+
+    //manage loader an errrs
 
     private fun showProgressBar() {
        // binding.buttonLogin.text = ""
