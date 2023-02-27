@@ -1,7 +1,9 @@
 package com.example.recipemaker.ui.fragments.photo
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
@@ -12,8 +14,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.recipemaker.ObjectDetectionHelper
 import com.example.recipemaker.R
 import com.example.recipemaker.databinding.FragmentPhotoBinding
@@ -21,6 +27,7 @@ import com.example.recipemaker.ui.rview.adapter.FoodAdapter
 
 import com.example.recipemaker.domain.model.Recipe
 import com.example.recipemaker.ui.activities.LogIn
+import com.example.recipemaker.ui.fragments.detailfood.DetailViewModel
 import com.example.recipemaker.utils.FoodProvider
 import com.example.recipemaker.utils.snackBar
 import com.example.recipemaker.utils.toast
@@ -59,6 +66,8 @@ class PhotoFragment : Fragment() {
     lateinit var image : InputImage
     lateinit var imageu : Uri
 
+    private val detailFood : DetailViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -77,7 +86,7 @@ class PhotoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = FoodAdapter(listResult,525,333){
-            println("something")
+            onItemSelected(it);
         }
         binding.rvResult.adapter = adapter
         initListeners()
@@ -86,11 +95,52 @@ class PhotoFragment : Fragment() {
 
     private fun initListeners(){
         binding.photoDetect.setOnClickListener{
-            uploadImg()
+
+
+
+            if (ContextCompat.checkSelfPermission(activity as LogIn, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+                // Permission is not granted
+                // Request the permission
+                activity?.snackBar("No se han concedido permisos de acceso",binding.rvResult)
+                ActivityCompat.requestPermissions(activity as LogIn,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    FoodProvider.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE)
+            } else {
+                // Permission has already been granted
+                // Access the gallery
+                uploadImg()
+            }
 
         }
        // manageVisibility()
     }
+
+    fun onItemSelected(food: Recipe){
+        detailFood.selectedItem(food)
+        FoodProvider.itemSelected = food
+        val result = "result"
+        // Use the Kotlin extension in the fragment-ktx artifact
+        //setFragmentResult("requestKey", bundleOf("bundleKey" to food.title))
+        findNavController().navigate(R.id.detailFood)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            FoodProvider.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE -> {
+                // If request is cancelled, the result arrays are empty
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission granted
+                    // Access the gallery
+                } else {
+                    // Permission denied
+                    // Handle the denied permission
+                }
+                return
+            }
+        }
+    }
+
 
     private fun manageVisibility(){
         if(listResult.size == 0){

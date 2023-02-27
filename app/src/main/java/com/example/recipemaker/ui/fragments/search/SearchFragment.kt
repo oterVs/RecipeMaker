@@ -119,13 +119,20 @@ class SearchFragment : Fragment() {
         binding.swipeRv.setOnRefreshListener {
             //listCountries.clear()
             //loadCountries()
+            list  = mutableListOf()
+            modelRecipe.onCreate()
+            list = FoodProvider.food.toMutableList()
+
+            adapter.setData(list)
+            adapter.notifyDataSetChanged()
+
             binding.swipeRv.isRefreshing = false
         }
 
         binding.rvFood.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (!recyclerView.canScrollVertically(-1)) {
-                    activity?.toast("halo")
+                    //activity?.toast("halo")
                 }
             }
         })

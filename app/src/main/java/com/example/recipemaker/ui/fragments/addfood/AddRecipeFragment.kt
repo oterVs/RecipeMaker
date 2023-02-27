@@ -1,11 +1,15 @@
 package com.example.recipemaker.ui.fragments.addfood
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.recipemaker.ui.rview.adapter.DetailAdapter
@@ -16,6 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import androidx.lifecycle.Observer
 import com.example.recipemaker.R
+import com.example.recipemaker.ui.activities.LogIn
+import com.example.recipemaker.ui.fragments.search.RecicleRecipeViewModel
 import com.example.recipemaker.ui.fragments.signup.SignUpViewModel
 import com.example.recipemaker.utils.*
 import java.util.*
@@ -29,6 +35,7 @@ class AddRecipeFragment : Fragment() {
     private val stepsl : MutableList<String> = mutableListOf()
     private val ingredients : MutableList<String> = mutableListOf()
 
+
     private lateinit var adapters : DetailAdapter
     private lateinit var adaptari : DetailAdapter
 
@@ -36,6 +43,7 @@ class AddRecipeFragment : Fragment() {
 
     private val addModel : AddViewModel by viewModels()
     private val signupView : SignUpViewModel by viewModels()
+    private val foodViewModel : RecicleRecipeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,11 +75,11 @@ class AddRecipeFragment : Fragment() {
                     signupView.saveUser(FoodProvider.userLogger)
                 }
                 is DataState.Error -> {
-                    //hideProgressDialog()
-                    //manageLoginErrorMessages(dataState.exception)
+                    hideProgressDialog()
+                    manageLoginErrorMessages(dataState.exception)
                 }
                 is DataState.Loading ->{
-                    //showProgressBar()
+                    showProgressBar()
                 }
                 else -> Unit
             }
@@ -79,12 +87,14 @@ class AddRecipeFragment : Fragment() {
         signupView.saveUserState.observe(viewLifecycleOwner, Observer { dataState ->
             when(dataState){
                 is DataState.Success<Boolean> -> {
-                    activity?.toast(getString(R.string.signup__signup_successfully))
+                    hideProgressDialog()
+                    activity?.snackBar(getString(R.string.signup__signup_successfully),binding.firebase)
+                    //foodViewModel.onCreate()
                     activity?.onBackPressed()
                 }
                 is DataState.Error -> {
-                   // hideProgressDialog()
-                   // manageRegisterErrorMessages(dataState.exception)
+                   hideProgressDialog()
+                    manageLoginErrorMessages(dataState.exception)
                 }
                 is DataState.Loading ->{
                   //  showProgressBar()
@@ -110,11 +120,29 @@ class AddRecipeFragment : Fragment() {
     private fun initListeners() {
 
         binding.imgAdd.setOnClickListener{
-           uploadImg()
+
+
+            if (ContextCompat.checkSelfPermission(activity as LogIn, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+                // Permission is not granted
+                // Request the permission
+                activity?.snackBar("No se han concedido permisos de acceso",binding.firebase)
+                ActivityCompat.requestPermissions(activity as LogIn,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    FoodProvider.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE)
+            } else {
+                // Permission has already been granted
+                // Access the gallery
+                uploadImg()
+            }
         }
 
         binding.firebase.setOnClickListener{
             uploadFirebase()
+        }
+
+        binding.backProfile.setOnClickListener {
+            activity?.onBackPressed()
         }
 
         binding.ingredientes.setOnEditorActionListener { v, keyCode, event ->
@@ -149,7 +177,7 @@ class AddRecipeFragment : Fragment() {
 
 
         if(DataOk()){
-            activity?.toast("se inserto")
+
             val formater = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
             val now = Date()
             val filename = formater.format(now)
@@ -166,7 +194,7 @@ class AddRecipeFragment : Fragment() {
 
             storageReference.putFile(image)
                 .addOnSuccessListener {
-                    activity?.toast("exito")
+
                     val recipe = Recipe(
                         title = binding.addName.text.toString(),
                         duration = binding.addDuration.text.toString(),
@@ -177,7 +205,7 @@ class AddRecipeFragment : Fragment() {
                     id = recipe.id
                     addModel.saveRecipe(recipe)
                 }.addOnFailureListener{
-                    activity?.toast("fail")
+                    activity?.toast("Algo salió mal")
                 }
         }
 
@@ -225,6 +253,24 @@ class AddRecipeFragment : Fragment() {
             image = data?.data!!
             binding.imgAdd.setImageURI(image)
         }
+    }
+
+    private fun showProgressBar() {
+       // binding.buttonLogin.text = ""
+        binding.firebase.isEnabled = false
+        binding.pbSignIn.visibility = View.VISIBLE
+    }
+    private fun manageLoginErrorMessages(exception: Exception) {
+        when(exception.message){
+            Constants.USER_NOT_EXISTS -> { activity?.snackBar(getString(R.string.login__error_user_no_registered),binding.firebase) }
+            Constants.WRONG_PASSWORD -> { activity?.snackBar(getString(R.string.login__error_wrong_password),binding.firebase) }
+            else -> { activity?.snackBar(getString(R.string.login__error_unknown_error),binding.firebase) }
+        }
+    }
+    private fun hideProgressDialog() {
+        binding.pbSignIn.visibility = View.GONE
+        //binding.buttonLogin.text = getString(R.string.login__login_button)
+        binding.firebase.isEnabled = true
     }
 
 }

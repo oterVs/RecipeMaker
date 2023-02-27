@@ -36,9 +36,7 @@ class FoodRepositoryImpl @Inject constructor(
                         //println(recipe1.id)
                         listFood.add(recipe1)
 
-                        if(counter >= 50){
-                            break
-                        }
+
                     }
                 }
                 .addOnFailureListener { exception ->

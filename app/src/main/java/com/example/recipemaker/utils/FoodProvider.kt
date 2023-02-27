@@ -10,6 +10,7 @@ class FoodProvider {
         var foodFav: List<Recipe> = emptyList()
         var itemSelected: Recipe = Recipe("uno")
         var userLogger: User = User()
+        public const val MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123
 
     }
 }
